@@ -13,7 +13,7 @@ export const {
    theme: {
       colors: {
          primary: '#E50914',
-         text: '#F2F2F2',
+         text: '#FFF',
          complementary: '#4E4D54',
          background: '#07090B',
          gray700: '#16151A',
