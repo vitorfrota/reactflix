@@ -5,6 +5,11 @@ import backgroundImg from '@/assets/img/mainBackground.jpg';
 export const Container = styled('main', {
    width: '$full',
    background: '#000',
+
+   '& .faqListContainer': {
+      width: '$full',
+      my: '$xxl',
+   },
 });
 
 export const HeroContainer = styled('section', {
