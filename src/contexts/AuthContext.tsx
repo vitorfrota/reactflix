@@ -54,7 +54,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
    const [isLogged, setIsLogged] = useState(() => {
       return Boolean(localStorage.getItem('@reactflix:isLogged') || '');
    });
-   const [user, setUser] = useState<User | undefined>();
+   const [user, setUser] = useState<User>({} as User);
 
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -134,7 +134,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
    const signOut = useCallback(async () => {
       await signOutGoogle(auth).then(() => {
-         setUser(undefined);
+         setUser({} as User);
          localStorage.removeItem('@reactflix:isLogged');
          setIsLogged(false);
       });
