@@ -13,9 +13,14 @@ export const {
    theme: {
       colors: {
          primary: '#E50914',
+         orange: '#E87C03',
          text: '#FFF',
-         complementary: '#4E4D54',
          background: '#07090B',
+         gray200: '#B3B3B3',
+         gray300: '#8C8C8C',
+         gray400: '#737373',
+         gray500: '#4E4D54',
+         gray600: '#333333',
          gray700: '#16151A',
       },
       fontSizes: {

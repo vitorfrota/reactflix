@@ -1,13 +1,16 @@
 import { Suspense } from 'react';
 
+import { AuthContextProvider } from '@/contexts/AuthContext';
 import Loading from '@/pages/Loading';
 import Routes from './routes';
 
 const App = () => {
    return (
-      <Suspense fallback={<Loading />}>
-         <Routes />
-      </Suspense>
+      <AuthContextProvider>
+         <Suspense fallback={<Loading />}>
+            <Routes />
+         </Suspense>
+      </AuthContextProvider>
    );
 };
 

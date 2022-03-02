@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/hooks/auth';
 
 interface RouteWrapperProps {
    component: React.ComponentType;
@@ -14,7 +15,7 @@ const RouteWrapper = ({
 }: RouteWrapperProps) => {
    const location = useLocation();
 
-   const isLogged = false;
+   const { isLogged } = useAuth();
 
    useEffect(() => {
       if (title !== '') document.title = `${title}`;

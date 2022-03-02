@@ -29,6 +29,11 @@ export default globalCss({
       cursor: 'pointer',
    },
 
+   input: {
+      border: 0,
+      outline: 0,
+   },
+
    '.wrapper': {
       width: '$full',
       maxWidth: '1600px',
