@@ -65,5 +65,11 @@ export const {
       my: (value: string) => ({ marginTop: value, marginBottom: value }),
       px: (value: string) => ({ paddingLeft: value, paddingRight: value }),
       py: (value: string) => ({ paddingTop: value, paddingBottom: value }),
+      wrapper: (value: string) => ({
+         margin: '0 auto',
+         px: '$base',
+         width: '$full',
+         maxWidth: value,
+      }),
    },
 });

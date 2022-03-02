@@ -5,7 +5,7 @@ import { Routes as AppRoutes, Route } from 'react-router-dom';
 import Wrapper from './RouteWrapper';
 
 // layouts
-const LayoutLogged = lazy(() => import('@/_layouts/Logged'));
+const WatchingLayout = lazy(() => import('@/_layouts/Watching'));
 
 const Explore = lazy(() => import('@/pages/Explore'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
@@ -14,7 +14,7 @@ const Signin = lazy(() => import('@/pages/Signin'));
 const Routes = () => {
    return (
       <AppRoutes>
-         <Route element={<LayoutLogged />}>
+         <Route element={<WatchingLayout />}>
             <Route
                path='explore'
                element={

@@ -4,13 +4,12 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { Button, Input } from '@/components';
+import { Button, Header, Input } from '@/components';
 import { useAuth } from '@/hooks/auth';
 import getValidationErrors from '@/utils/getValidationErrors';
 
 import googleLogoImg from '@/assets/img/googleImg.png';
 import loginBgImg from '@/assets/img/loginBackground.jpg';
-import logoImg from '@/assets/img/logo1x.png';
 
 import * as S from './styles';
 
@@ -67,11 +66,7 @@ const Signin = () => {
 
    return (
       <S.Container style={containerStyles}>
-         <header>
-            <div className='wrapper'>
-               <img src={logoImg} alt='logo reactflix' />
-            </div>
-         </header>
+         <Header fixed />
          <S.FormContainer>
             <h1>Entrar</h1>
             <Form ref={formRef} onSubmit={handleSubmit}>

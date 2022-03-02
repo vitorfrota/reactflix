@@ -1,5 +1,11 @@
+import * as S from './styles';
+
 const Explore = () => {
-   return <h1>Explore</h1>;
+   return (
+      <S.Container>
+         <h1>Explore</h1>
+      </S.Container>
+   );
 };
 
 export default Explore;

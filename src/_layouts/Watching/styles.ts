@@ -1,22 +1,7 @@
 import { styled } from '@/../stitches.config';
 
-export const Container = styled('main', {});
-
-export const HeaderContainer = styled('header', {
-   width: '$full',
-   py: '$base',
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'space-between',
-   borderBottom: '1px solid $gray700',
-
-   '& .userProfile': {
-      '& img': {
-         width: '$xl',
-         height: '$xl',
-         borderRadius: '50%',
-      },
-   },
+export const Container = styled('main', {
+   wrapper: '1600px',
 });
 
 export const NavigationContainer = styled('nav', {
@@ -48,4 +33,15 @@ export const NavigationContainer = styled('nav', {
          borderColor: '$primary',
       },
    },
+});
+
+export const CategoriesContainer = styled('div', {
+   position: 'absolute',
+   top: '64px',
+   left: 0,
+   right: 0,
+   width: '$full',
+   padding: '$base',
+
+   backgroundColor: '$gray700',
 });

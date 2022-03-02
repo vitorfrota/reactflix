@@ -4,11 +4,13 @@ export const Container = styled('main', {
    width: '100vw',
    minHeight: '100vh',
    paddingTop: '$base',
-   display: 'flex',
-   flexDirection: 'column',
-   justifyContent: 'space-between',
+   display: 'grid',
+   placeContent: 'center',
 
    '& footer': {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       width: '$full',
       py: '$base',
       display: 'flex',
