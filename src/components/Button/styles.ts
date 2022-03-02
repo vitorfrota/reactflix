@@ -1,20 +1,36 @@
 import { styled } from '@/../stitches.config';
 
 export const Container = styled('button', {
-   width: '$full',
    padding: '$base',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
    fontSize: '$base',
-   fontWeight: '$bold',
+   fontWeight: '$medium',
    borderRadius: '4px',
 
+   '& svg': {
+      mx: '$s',
+   },
+
    variants: {
+      noRadius: {
+         true: {
+            borderRadius: '0',
+         },
+      },
       variant: {
          primary: {
             backgroundColor: '$primary',
             color: '$text',
+         },
+      },
+      size: {
+         full: {
+            width: '$full',
+         },
+         small: {
+            py: '$s',
          },
       },
    },

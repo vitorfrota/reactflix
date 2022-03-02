@@ -10,6 +10,7 @@ const WatchingLayout = lazy(() => import('@/_layouts/Watching'));
 const Explore = lazy(() => import('@/pages/Explore'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Signin = lazy(() => import('@/pages/Signin'));
+const Signup = lazy(() => import('@/pages/Signup'));
 
 const Routes = () => {
    return (
@@ -26,7 +27,8 @@ const Routes = () => {
                }
             />
          </Route>
-         <Route path='/' element={<Wrapper component={Signin} />} />
+         <Route path='/' element={<Wrapper component={Signup} />} />
+         <Route path='/signin' element={<Wrapper component={Signin} />} />
          <Route path='*' element={<NotFound />} />
       </AppRoutes>
    );

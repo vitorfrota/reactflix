@@ -57,8 +57,9 @@ export const {
       },
    },
    media: {
-      mobile: '(max-width: 767px)',
+      mobile: '(max-width: 768px)',
       tablet: '(max-width: 1024px)',
+      laptop: '(max-width: 1920px)',
    },
    utils: {
       mx: (value: string) => ({ marginLeft: value, marginRight: value }),

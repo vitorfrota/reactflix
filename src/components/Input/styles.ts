@@ -3,7 +3,7 @@ import { styled } from '@/../stitches.config';
 export const Container = styled('div', {
    position: 'relative',
    width: '$full',
-   paddingBottom: '0.25rem',
+   height: '56px',
    backgroundColor: '$gray600',
    borderRadius: '4px',
    borderBottom: '2px solid transparent',
@@ -12,15 +12,16 @@ export const Container = styled('div', {
 
    '& label': {
       position: 'absolute',
-      top: '$base',
+      top: '30%',
       left: '$base',
       fontSize: '$base',
+      fontWeight: '$medium',
       color: '$gray300',
    },
 
    '& input': {
       width: '$full',
-      height: '50px',
+      height: '$full',
       paddingTop: '$base',
       px: '$base',
       background: 'none',
@@ -38,7 +39,7 @@ export const Container = styled('div', {
          true: {
             '& label': {
                position: 'absolute',
-               top: '8px',
+               top: '6px',
                fontSize: '0.75rem',
             },
          },
@@ -49,12 +50,39 @@ export const Container = styled('div', {
 
             '& label': {
                position: 'absolute',
-               top: '8px',
+               top: '6px',
                fontSize: '0.75rem',
             },
          },
       },
+      noRadius: {
+         true: {
+            borderRadius: 0,
+         },
+      },
+      variant: {
+         white: {
+            backgroundColor: '#fff',
+
+            '& input': {
+               color: '$background',
+            },
+         },
+      },
    },
+   compoundVariants: [
+      {
+         variant: 'white',
+         isFocused: true,
+         css: {
+            backgroundColor: '#fff',
+
+            '& input': {
+               color: '$background',
+            },
+         },
+      },
+   ],
 });
 
 export const Error = styled('span', {

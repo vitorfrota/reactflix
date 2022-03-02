@@ -26,7 +26,7 @@ const RouteWrapper = ({
    }
 
    if (!isLogged && isPrivate) {
-      return <Navigate to='/' state={{ from: location }} replace />;
+      return <Navigate to='/signin' state={{ from: location }} replace />;
    }
 
    return <Component />;

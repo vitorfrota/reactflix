@@ -32,7 +32,7 @@ const Profile = () => {
    }, [showMenu]);
 
    const handleSignout = useCallback(() => {
-      navigate('/', { state: {}, replace: true });
+      navigate('/signin', { replace: true });
       signOut();
    }, []);
 

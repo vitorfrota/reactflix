@@ -9,7 +9,7 @@ import { useAuth } from '@/hooks/auth';
 import getValidationErrors from '@/utils/getValidationErrors';
 
 import googleLogoImg from '@/assets/img/googleImg.png';
-import loginBgImg from '@/assets/img/loginBackground.jpg';
+import loginBgImg from '@/assets/img/mainBackground.jpg';
 
 import * as S from './styles';
 
@@ -81,6 +81,7 @@ const Signin = () => {
                   type='submit'
                   variant={'primary'}
                   containerStyle={{ marginTop: '48px' }}
+                  size={'full'}
                >
                   Entrar
                </Button>
@@ -102,7 +103,7 @@ const Signin = () => {
             </S.ButtonConnectWithGoogle>
             <div className='signupNow'>
                Novo por aqui?
-               <Link to='/signup'> Assine agora</Link>
+               <Link to='/'> Assine agora</Link>
             </div>
             <span>
                Esta página é protegida pelo Senhor reCAPTCHA para garantir que

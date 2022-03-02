@@ -15,11 +15,15 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    label?: string;
    containerStyle?: {};
    icon?: React.ComponentType<IconBaseProps>;
+   variant?: 'white';
+   noRadius?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
    name,
    label,
+   noRadius,
+   variant,
    containerStyle,
    icon: Icon,
    ...rest
@@ -60,6 +64,8 @@ const Input: React.FC<InputProps> = ({
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             ref={containerRef}
+            variant={variant}
+            noRadius={noRadius}
             tabIndex={0}
          >
             {Icon && <Icon size={20} />}
