@@ -103,7 +103,7 @@ const Signin = () => {
             </S.ButtonConnectWithGoogle>
             <div className='signupNow'>
                Novo por aqui?
-               <Link to='/'> Assine agora</Link>
+               <Link to='/signup/registration'> Assine agora</Link>
             </div>
             <span>
                Esta página é protegida pelo Senhor reCAPTCHA para garantir que

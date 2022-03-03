@@ -1,3 +1,4 @@
+import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FiChevronRight } from 'react-icons/fi';
@@ -5,12 +6,11 @@ import { FiChevronRight } from 'react-icons/fi';
 import { Button, FaqItem, Header, Input } from '@/components';
 import { ISectionSignUp, sections } from '@/constants/sectionsLanding';
 import faqQuestions from '@/constants/faqQuestions';
-
-import Section from './components/Section';
-import * as S from './styles';
-import { useContext } from 'react';
 import { RegistrationContext } from '@/contexts/RegistrationContext';
 
+import Section from './components/Section';
+
+import * as S from './styles';
 const Signup = () => {
    const navigate = useNavigate();
 
@@ -72,13 +72,20 @@ const Signup = () => {
 const FormSignup = () => {
    const { handleSetUserInformation } = useContext(RegistrationContext);
 
+   const navigate = useNavigate();
+
+   const handleNextStepToCreateAccount = useCallback((formData: {}) => {
+      handleSetUserInformation(formData);
+      navigate('signup/registration');
+   }, []);
+
    return (
       <S.FormContainer>
          <p>
             Pronto para assistir? Informe seu email para criar ou reiniciar sua
             assinatura.
          </p>
-         <Form onSubmit={handleSetUserInformation}>
+         <Form onSubmit={handleNextStepToCreateAccount}>
             <Input
                type='email'
                name='email'
@@ -88,7 +95,7 @@ const FormSignup = () => {
                noRadius
             />
             <Button
-               type='button'
+               type='submit'
                containerStyle={{
                   marginLeft: '4px',
                   flex: 1,

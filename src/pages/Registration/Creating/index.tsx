@@ -17,7 +17,7 @@ interface IRegistrationData {
 
 const Creating = () => {
    const navigate = useNavigate();
-   const { formData, handleSetUserInformation } =
+   const { formStore, setUserStoreRegistration } =
       useContext(RegistrationContext);
    const formRef = useRef<FormHandles>(null);
 
@@ -39,7 +39,7 @@ const Creating = () => {
                abortEarly: false,
             });
 
-            handleSetUserInformation(formData);
+            setUserStoreRegistration(formData);
             navigate('../naming');
          } catch (error) {
             if (error instanceof Yup.ValidationError) {
@@ -48,8 +48,6 @@ const Creating = () => {
 
                return;
             }
-
-            alert('E-mail ou senha incorretos');
          }
       },
       [formRef.current]
@@ -59,7 +57,7 @@ const Creating = () => {
          <h1>Crie uma senha para iniciar sua assinatura.</h1>
          <p>Faltam só mais alguns passos!</p>
          <p>Nós também detestamos formulários.</p>
-         <Form ref={formRef} initialData={formData} onSubmit={handleSubmit}>
+         <Form ref={formRef} initialData={formStore} onSubmit={handleSubmit}>
             <Input
                type='email'
                name='email'

@@ -10,8 +10,6 @@ import {
    signInWithPopup,
    signInWithEmailAndPassword,
    signOut as signOutGoogle,
-   createUserWithEmailAndPassword,
-   updateProfile,
 } from 'firebase/auth';
 
 import { auth } from '@/services/firebase';
@@ -24,6 +22,7 @@ type User = {
    id: string;
    name: string;
    email: string | null;
+   emailVerified: boolean;
    avatar: string;
 };
 
@@ -32,15 +31,8 @@ type Signin = {
    password: string;
 };
 
-type Signup = {
-   name: string;
-   email: string;
-   password: string;
-};
-
 type AuthContextType = {
    user: User | undefined;
-   createUser: (formData: Signup) => Promise<void>;
    isLogged: boolean;
    signInWithGoogle: () => Promise<void>;
    signInWithEmail: (formData: Signin) => Promise<void>;
@@ -62,7 +54,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             setUser(_getUser(user));
 
             setIsLogged(true);
-            localStorage.setItem('@habitio:isLogged', JSON.stringify(uid));
+            localStorage.setItem('@reactflix:isLogged', JSON.stringify(uid));
          }
       });
       return () => {
@@ -90,41 +82,19 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             }
          })
          .catch((_) => {
-            throw new Error('E-mail ou senha incorreto');
-         });
-   }, []);
-
-   const createUser = useCallback(async (formData: Signup) => {
-      const { name, email, password } = formData;
-
-      await createUserWithEmailAndPassword(auth, email, password)
-         .then((_) => {
-            const { currentUser } = auth;
-
-            if (currentUser) {
-               updateProfile(currentUser, {
-                  displayName: name,
-                  photoURL: '',
-               }).catch((_) => {
-                  throw new Error('Houve um problema na criação da conta');
-               });
-            }
-
-            alert('Conta criada com sucesso!');
-         })
-         .catch((_) => {
-            throw new Error('Houve um problema na criação da conta');
+            throw new Error('E-mail e/ou senha incorretos');
          });
    }, []);
 
    const _getUser = useCallback((user: any) => {
-      const { displayName, photoURL, uid, email } = user;
+      const { displayName, photoURL, uid, email, emailVerified } = user;
 
       const userData: User = {
          id: uid,
          name: displayName || '',
          email,
          avatar: photoURL || '',
+         emailVerified: emailVerified,
       };
       return userData;
    }, []);
@@ -141,7 +111,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       <AuthContext.Provider
          value={{
             user,
-            createUser,
             isLogged,
             signInWithGoogle,
             signInWithEmail,

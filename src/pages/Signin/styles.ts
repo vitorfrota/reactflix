@@ -30,7 +30,7 @@ export const FormContainer = styled('div', {
    display: 'flex',
    flexDirection: 'column',
 
-   backgroundColor: 'rgba(0,0,0, 0.5)',
+   backgroundColor: 'rgba(0,0,0, 0.75)',
    borderRadius: '4px',
 
    '& h1': {

@@ -1,22 +1,24 @@
-import { useAuth } from '@/hooks/auth';
-import {
-   createContext,
-   ReactNode,
-   useCallback,
-   useEffect,
-   useState,
-} from 'react';
+import { createContext, ReactNode, useCallback, useState } from 'react';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
-type RegistrationContextType = {
-   currentStep: number;
-   formData: {};
-   handleSetUserInformation: (formData: {}) => void;
+import { auth } from '@/services/firebase';
+
+type Signup = {
+   name: string;
+   email: string;
+   password: string;
 };
 
 type CreatingUser = {
    name: string;
    email: string;
    password: string;
+};
+
+type RegistrationContextType = {
+   createUser: (formData: Signup) => Promise<void>;
+   formStore: CreatingUser;
+   setUserStoreRegistration: (formData: {}) => void;
 };
 
 type RegistrationContextProviderProps = {
@@ -28,36 +30,50 @@ export const RegistrationContext = createContext({} as RegistrationContextType);
 export function RegistrationContextProvider({
    children,
 }: RegistrationContextProviderProps) {
-   const { createUser } = useAuth();
-   const [currentStep, setCurrentStep] = useState(1);
-   const [formData, setFormData] = useState<CreatingUser>({} as CreatingUser);
+   const [formStore, setFormStore] = useState<CreatingUser>({} as CreatingUser);
 
-   useEffect(() => {
-      if (currentStep > 3) {
-         createUser(formData);
-      }
-   }, [currentStep]);
-
-   const handleSetUserInformation = useCallback(
+   const setUserStoreRegistration = useCallback(
       (formData: {}) => {
-         setFormData((state) => {
+         setFormStore((state) => {
             return {
                ...state,
                ...formData,
             };
          });
-
-         setCurrentStep((state) => state + 1);
       },
-      [currentStep, formData]
+      [formStore]
    );
+
+   const createUser = useCallback(async (formData: Signup) => {
+      const { name, email, password } = formData;
+
+      await createUserWithEmailAndPassword(auth, email, password)
+         .then((_) => {
+            const { currentUser } = auth;
+
+            if (currentUser) {
+               updateProfile(currentUser, {
+                  displayName: name,
+                  photoURL: '',
+               }).catch((_) => {
+                  throw new Error('Houve um problema na criação da conta');
+               });
+            }
+
+            setFormStore({} as CreatingUser);
+            alert('Conta criada com sucesso!');
+         })
+         .catch((_) => {
+            throw new Error('Houve um problema na criação da conta');
+         });
+   }, []);
 
    return (
       <RegistrationContext.Provider
          value={{
-            currentStep,
-            formData,
-            handleSetUserInformation,
+            createUser,
+            formStore,
+            setUserStoreRegistration,
          }}
       >
          {children}

@@ -1,4 +1,5 @@
 import { useCallback, useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -10,12 +11,12 @@ import { RegistrationContext } from '@/contexts/RegistrationContext';
 import * as S from './styles';
 
 interface IRegistrationData {
-   email: string;
-   password: string;
+   name: string;
 }
 
 const Naming = () => {
-   const { handleSetUserInformation } = useContext(RegistrationContext);
+   const navigate = useNavigate();
+   const { formStore, createUser } = useContext(RegistrationContext);
    const formRef = useRef<FormHandles>(null);
 
    const handleSubmit = useCallback(
@@ -31,7 +32,13 @@ const Naming = () => {
                abortEarly: false,
             });
 
-            handleSetUserInformation(formData);
+            const userToCreate = {
+               ...formStore,
+               ...formData,
+            };
+
+            await createUser(userToCreate);
+            navigate('/signin');
          } catch (error) {
             if (error instanceof Yup.ValidationError) {
                const errors = getValidationErrors(error);
@@ -39,8 +46,6 @@ const Naming = () => {
 
                return;
             }
-
-            alert('Houve algum problema!!! :(');
          }
       },
       [formRef.current]

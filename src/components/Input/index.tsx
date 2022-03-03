@@ -43,6 +43,12 @@ const Input: React.FC<InputProps> = ({
       });
    }, [fieldName, registerField]);
 
+   useEffect(() => {
+      if (!!inputRef.current?.value) {
+         setIsFilled(true);
+      }
+   }, [inputRef.current]);
+
    const handleInputBlur = useCallback(() => {
       setIsFocused(false);
       setIsFilled(!!inputRef.current?.value);

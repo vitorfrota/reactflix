@@ -6,7 +6,7 @@ export const Container = styled('button', {
    alignItems: 'center',
    justifyContent: 'center',
    fontSize: '$base',
-   fontWeight: '$medium',
+   fontWeight: '$bold',
    borderRadius: '4px',
 
    '& svg': {
