@@ -70,12 +70,12 @@ const Signup = () => {
 };
 
 const FormSignup = () => {
-   const { handleSetUserInformation } = useContext(RegistrationContext);
+   const { setUserStoreRegistration } = useContext(RegistrationContext);
 
    const navigate = useNavigate();
 
    const handleNextStepToCreateAccount = useCallback((formData: {}) => {
-      handleSetUserInformation(formData);
+      setUserStoreRegistration(formData);
       navigate('signup/registration');
    }, []);
 

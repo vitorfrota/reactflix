@@ -10,7 +10,7 @@ export type ISectionSignUp = {
    reverse?: boolean;
 };
 
-const sections: ISectionSignUp[] = [
+export const sections: ISectionSignUp[] = [
    {
       reverse: true,
       image: tvImg,
@@ -38,5 +38,3 @@ const sections: ISectionSignUp[] = [
          'Deixe as crianças se aventurarem com seus personagens favoritos em um espaço feito só para elas, sem pagar a mais por isso.',
    },
 ];
-
-export { ISectionSignUp, sections };
