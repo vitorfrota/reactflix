@@ -1,22 +1,16 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { Button, Header, Input } from '@/components';
+import { Button, Header, Input, Toast } from '@/components';
 import { useAuth } from '@/hooks/auth';
 import getValidationErrors from '@/utils/getValidationErrors';
 
 import googleLogoImg from '@/assets/img/googleImg.png';
-import loginBgImg from '@/assets/img/mainBackground.jpg';
 
 import * as S from './styles';
-
-const containerStyles = {
-   background: `url(${loginBgImg}) no-repeat 100%`,
-   backgroundSize: 'cover',
-};
 
 interface ISigninData {
    email: string;
@@ -24,7 +18,9 @@ interface ISigninData {
 }
 
 const Signin = () => {
-   const { signInWithEmail, signInWithGoogle } = useAuth();
+   const [showPassword, setShowPassword] = useState(false);
+   const { errorMessage, loading, signInWithEmail, signInWithGoogle } =
+      useAuth();
    const formRef = useRef<FormHandles>(null);
 
    const handleSubmit = useCallback(
@@ -50,11 +46,8 @@ const Signin = () => {
             if (error instanceof Yup.ValidationError) {
                const errors = getValidationErrors(error);
                formRef.current?.setErrors(errors);
-
                return;
             }
-
-            alert('E-mail ou senha incorretos');
          }
       },
       [formRef.current]
@@ -64,26 +57,37 @@ const Signin = () => {
       signInWithGoogle();
    }, []);
 
+   const handleToggleShowPassword = useCallback(() => {
+      setShowPassword((state) => !state);
+   }, [showPassword]);
+
    return (
-      <S.Container style={containerStyles}>
+      <S.Container>
          <Header fixed />
          <S.FormContainer>
             <h1>Entrar</h1>
+            {errorMessage && (
+               <Toast
+                  message={errorMessage}
+                  containerStyle={{ marginBottom: '1rem' }}
+               />
+            )}
             <Form ref={formRef} onSubmit={handleSubmit}>
-               <Input type='email' name='email' label='E-mail' required />
+               <Input type='email' name='email' label='E-mail' />
                <Input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   name='password'
                   label='Senha'
                   containerStyle={{ marginTop: '16px' }}
+                  complement={
+                     <ButtonTogglePassword
+                        state={showPassword}
+                        cb={handleToggleShowPassword}
+                     />
+                  }
                />
-               <Button
-                  type='submit'
-                  variant={'primary'}
-                  containerStyle={{ marginTop: '48px' }}
-                  size={'full'}
-               >
-                  Entrar
+               <Button type='submit' variant={'primary'} size={'full'}>
+                  {loading ? 'Entrando...' : 'Entrar'}
                </Button>
             </Form>
             <div className='extra'>
@@ -114,6 +118,19 @@ const Signin = () => {
             <p>Desenvolvido por Vitor Frota - 2022</p>
          </footer>
       </S.Container>
+   );
+};
+
+interface ButtonTogglePasswordProps {
+   state: boolean;
+   cb: () => void;
+}
+
+const ButtonTogglePassword = ({ state, cb }: ButtonTogglePasswordProps) => {
+   return (
+      <button type='button' className='btnTogglePassword' onClick={cb}>
+         {state ? 'Esconder' : 'Mostrar'}
+      </button>
    );
 };
 

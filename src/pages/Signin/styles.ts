@@ -1,11 +1,15 @@
 import { styled } from '@/../stitches.config';
 
+import loginBgImg from '@/assets/img/mainBackground.jpg';
+
 export const Container = styled('main', {
    width: '100vw',
    minHeight: '100vh',
    paddingTop: '$base',
    display: 'grid',
    placeContent: 'center',
+   background: `url(${loginBgImg}) no-repeat 100%`,
+   backgroundSize: 'cover',
 
    '& footer': {
       position: 'absolute',
@@ -35,6 +39,17 @@ export const FormContainer = styled('div', {
 
    '& h1': {
       marginBottom: '$l',
+   },
+
+   '& .btnTogglePassword': {
+      backgroundColor: 'transparent',
+      color: '$gray200',
+      textTransform: 'uppercase',
+      fontSize: '0.875rem',
+   },
+
+   '& button[type="submit"]': {
+      marginTop: '$xl',
    },
 
    '& .extra': {
@@ -77,6 +92,7 @@ export const ButtonConnectWithGoogle = styled('button', {
    color: '$gray400',
    border: 0,
    outline: 0,
+   fontWeight: '$medium',
 
    '& img': {
       width: '$base',

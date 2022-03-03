@@ -13,6 +13,7 @@ import * as S from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    name: string;
    label?: string;
+   complement?: React.ReactNode;
    containerStyle?: {};
    icon?: React.ComponentType<IconBaseProps>;
    variant?: 'white' | 'whiteBordered';
@@ -22,6 +23,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<InputProps> = ({
    name,
    label,
+   complement,
    noRadius,
    variant,
    containerStyle,
@@ -77,6 +79,7 @@ const Input: React.FC<InputProps> = ({
             {Icon && <Icon size={20} />}
             {label && <label htmlFor={name}>{label}</label>}
             <input defaultValue={defaultValue} ref={inputRef} {...rest} />
+            <span className='complement'>{complement}</span>
          </S.Container>
          {error && <S.Error>{error}</S.Error>}
       </>

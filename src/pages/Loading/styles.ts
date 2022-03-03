@@ -24,8 +24,8 @@ const spin = keyframes({
 export const SpinnerContainer = styled('div', {
    width: '70px',
    height: '70px',
-   border: '6px solid $gray600',
-   borderTop: '6px solid $primary',
+   border: '4px solid transparent',
+   borderTop: '4px solid $primary',
    borderRadius: '50%',
    animation: `${spin} 300ms linear infinite`,
 });

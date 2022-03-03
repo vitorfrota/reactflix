@@ -29,6 +29,12 @@ export const Container = styled('div', {
       fontSize: '1rem',
    },
 
+   '& .complement': {
+      position: 'absolute',
+      top: '30%',
+      right: '16px',
+   },
+
    variants: {
       hasError: {
          true: {

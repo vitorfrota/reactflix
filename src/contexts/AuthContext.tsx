@@ -32,11 +32,13 @@ type Signin = {
 };
 
 type AuthContextType = {
-   user: User | undefined;
+   errorMessage: string | null;
+   loading: boolean;
    isLogged: boolean;
    signInWithGoogle: () => Promise<void>;
    signInWithEmail: (formData: Signin) => Promise<void>;
    signOut: () => void;
+   user: User | undefined;
 };
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -45,6 +47,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
    const [isLogged, setIsLogged] = useState(() => {
       return Boolean(localStorage.getItem('@reactflix:isLogged') || '');
    });
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+   const [loading, setLoading] = useState(false);
    const [user, setUser] = useState<User>({} as User);
 
    useEffect(() => {
@@ -57,33 +61,31 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             localStorage.setItem('@reactflix:isLogged', JSON.stringify(uid));
          }
       });
-      return () => {
-         unsubscribe();
-      };
+      return () => unsubscribe();
    }, []);
 
    const signInWithGoogle = useCallback(async () => {
       const provider = new GoogleAuthProvider();
 
-      await signInWithPopup(auth, provider).then(({ user }) => {
-         if (user) {
-            setUser(_getUser(user));
-         }
-      });
+      await signInWithPopup(auth, provider).then(
+         ({ user }) => user && setUser(_getUser(user))
+      );
    }, []);
 
    const signInWithEmail = useCallback(async (formData: Signin) => {
       const { email, password } = formData;
 
+      setLoading(true);
+
       await signInWithEmailAndPassword(auth, email, password)
          .then(({ user }) => {
             if (user) {
                setUser(_getUser(user));
+               setErrorMessage(null);
             }
          })
-         .catch((_) => {
-            throw new Error('E-mail e/ou senha incorretos');
-         });
+         .catch(() => setErrorMessage('E-mail e/ou senha incorretos'))
+         .finally(() => setLoading(false));
    }, []);
 
    const _getUser = useCallback((user: any) => {
@@ -100,21 +102,24 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
    }, []);
 
    const signOut = useCallback(async () => {
-      await signOutGoogle(auth).then(() => {
-         setUser({} as User);
-         localStorage.removeItem('@reactflix:isLogged');
-         setIsLogged(false);
-      });
+      await signOutGoogle(auth)
+         .then(() => {
+            setUser({} as User);
+            localStorage.removeItem('@reactflix:isLogged');
+         })
+         .finally(() => setIsLogged(false));
    }, []);
 
    return (
       <AuthContext.Provider
          value={{
-            user,
+            errorMessage,
             isLogged,
+            loading,
             signInWithGoogle,
             signInWithEmail,
             signOut,
+            user,
          }}
       >
          {children}

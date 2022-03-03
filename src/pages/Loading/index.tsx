@@ -6,7 +6,7 @@ const Loading = () => {
    return (
       <S.Container>
          <img src={logoImg} alt='logo reactflix loading' />
-         <Spinner style={{ marginTop: '1rem' }} />
+         <Spinner style={{ marginTop: '1.5rem' }} />
       </S.Container>
    );
 };
