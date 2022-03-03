@@ -86,8 +86,13 @@ const Signin = () => {
                      />
                   }
                />
-               <Button type='submit' variant={'primary'} size={'full'}>
-                  {loading ? 'Entrando...' : 'Entrar'}
+               <Button
+                  type='submit'
+                  loading={loading}
+                  variant={'primary'}
+                  size={'full'}
+               >
+                  Entrar
                </Button>
             </Form>
             <div className='extra'>

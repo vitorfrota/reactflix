@@ -5,11 +5,11 @@ export const Container = styled('div', {
    padding: '$base',
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'center',
+   justifyContent: 'flex-start',
    backgroundColor: '$orange',
    color: '#fff',
    borderRadius: '4px',
-   fontWeight: '$bold',
+   fontWeight: '$medium',
 
    '& svg': {
       width: '1.5rem',

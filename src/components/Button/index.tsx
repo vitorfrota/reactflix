@@ -1,18 +1,21 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { Spinner } from '..';
 
 import * as S from './styles';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    children: ReactNode;
    containerStyle?: any;
-   variant?: 'primary';
+   loading?: boolean;
    noRadius?: boolean;
    size?: 'full' | 'small';
+   variant?: 'primary';
 }
 
 const Button = ({
    children,
    containerStyle,
+   loading,
    noRadius,
    size,
    variant,
@@ -20,13 +23,14 @@ const Button = ({
 }: IButtonProps) => {
    return (
       <S.Container
-         style={containerStyle}
-         variant={variant}
+         loading={loading}
          noRadius={noRadius}
          size={size}
+         style={containerStyle}
+         variant={variant}
          {...rest}
       >
-         {children}
+         {loading ? <Spinner variant='light' size='small' /> : children}
       </S.Container>
    );
 };

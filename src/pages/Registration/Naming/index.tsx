@@ -1,5 +1,4 @@
 import { useCallback, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -15,8 +14,7 @@ interface IRegistrationData {
 }
 
 const Naming = () => {
-   const navigate = useNavigate();
-   const { formStore, createUser } = useContext(RegistrationContext);
+   const { createUser, formStore, loading } = useContext(RegistrationContext);
    const formRef = useRef<FormHandles>(null);
 
    const handleSubmit = useCallback(
@@ -38,7 +36,6 @@ const Naming = () => {
             };
 
             await createUser(userToCreate);
-            navigate('/signin');
          } catch (error) {
             if (error instanceof Yup.ValidationError) {
                const errors = getValidationErrors(error);
@@ -64,12 +61,13 @@ const Naming = () => {
             />
             <Button
                type='submit'
+               containerStyle={{ marginTop: '16px', fontSize: '1.5rem' }}
+               loading={loading}
                size={'full'}
                variant={'primary'}
-               containerStyle={{ marginTop: '16px', fontSize: '1.5rem' }}
                noRadius
             >
-               Próximo
+               Concluir
             </Button>
          </Form>
       </S.Container>

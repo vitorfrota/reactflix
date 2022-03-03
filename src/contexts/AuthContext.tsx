@@ -5,6 +5,7 @@ import {
    useEffect,
    useState,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
    GoogleAuthProvider,
    signInWithPopup,
@@ -44,12 +45,22 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
+   const location = useLocation();
+
    const [isLogged, setIsLogged] = useState(() => {
       return Boolean(localStorage.getItem('@reactflix:isLogged') || '');
    });
    const [errorMessage, setErrorMessage] = useState<string | null>(null);
    const [loading, setLoading] = useState(false);
    const [user, setUser] = useState<User>({} as User);
+
+   useEffect(() => {
+      const { pathname } = location;
+
+      if (pathname !== '/signin') {
+         setErrorMessage(null);
+      }
+   }, [location.pathname]);
 
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -84,7 +95,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
                setErrorMessage(null);
             }
          })
-         .catch(() => setErrorMessage('E-mail e/ou senha incorretos'))
+         .catch(() =>
+            setErrorMessage('E-mail e/ou senha incorretos. Tente novamente.')
+         )
          .finally(() => setLoading(false));
    }, []);
 

@@ -1,6 +1,7 @@
 import { styled } from '@/../stitches.config';
 
 export const Container = styled('button', {
+   height: '56px',
    padding: '$base',
    display: 'flex',
    alignItems: 'center',
@@ -14,6 +15,12 @@ export const Container = styled('button', {
    },
 
    variants: {
+      loading: {
+         true: {
+            opacity: '0.75',
+            cursor: 'not-allowed',
+         },
+      },
       noRadius: {
          true: {
             borderRadius: '0',
@@ -30,6 +37,7 @@ export const Container = styled('button', {
             width: '$full',
          },
          small: {
+            height: 'auto',
             py: '$s',
          },
       },

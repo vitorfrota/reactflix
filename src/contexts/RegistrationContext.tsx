@@ -17,7 +17,9 @@ type CreatingUser = {
 
 type RegistrationContextType = {
    createUser: (formData: Signup) => Promise<void>;
+   errorMessage: string | null;
    formStore: CreatingUser;
+   loading: boolean;
    setUserStoreRegistration: (formData: {}) => void;
 };
 
@@ -31,6 +33,8 @@ export function RegistrationContextProvider({
    children,
 }: RegistrationContextProviderProps) {
    const [formStore, setFormStore] = useState<CreatingUser>({} as CreatingUser);
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+   const [loading, setLoading] = useState(false);
 
    const setUserStoreRegistration = useCallback(
       (formData: {}) => {
@@ -47,32 +51,31 @@ export function RegistrationContextProvider({
    const createUser = useCallback(async (formData: Signup) => {
       const { name, email, password } = formData;
 
-      await createUserWithEmailAndPassword(auth, email, password)
-         .then((_) => {
-            const { currentUser } = auth;
+      setLoading(true);
 
-            if (currentUser) {
-               updateProfile(currentUser, {
+      await createUserWithEmailAndPassword(auth, email, password)
+         .then(() => {
+            if (auth.currentUser) {
+               updateProfile(auth.currentUser, {
                   displayName: name,
                   photoURL: '',
-               }).catch((_) => {
-                  throw new Error('Houve um problema na criação da conta');
                });
             }
-
             setFormStore({} as CreatingUser);
             alert('Conta criada com sucesso!');
+            setErrorMessage(null);
          })
-         .catch((_) => {
-            throw new Error('Houve um problema na criação da conta');
-         });
+         .catch(() => setErrorMessage('Houve um problema na criação da conta'))
+         .finally(() => setLoading(false));
    }, []);
 
    return (
       <RegistrationContext.Provider
          value={{
             createUser,
+            errorMessage,
             formStore,
+            loading,
             setUserStoreRegistration,
          }}
       >

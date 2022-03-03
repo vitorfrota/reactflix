@@ -1,18 +1,14 @@
 import logoImg from '@/assets/img/logo2x.png';
-
+import { Spinner } from '@/components';
 import * as S from './styles';
 
 const Loading = () => {
    return (
       <S.Container>
          <img src={logoImg} alt='logo reactflix loading' />
-         <Spinner style={{ marginTop: '1.5rem' }} />
+         <Spinner containerStyle={{ marginTop: '1.5rem' }} size='large' />
       </S.Container>
    );
-};
-
-const Spinner = ({ ...rest }) => {
-   return <S.SpinnerContainer {...rest} />;
 };
 
 export default Loading;
