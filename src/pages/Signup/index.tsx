@@ -8,6 +8,8 @@ import faqQuestions from '@/constants/faqQuestions';
 
 import Section from './components/Section';
 import * as S from './styles';
+import { useContext } from 'react';
+import { RegistrationContext } from '@/contexts/RegistrationContext';
 
 const Signup = () => {
    const navigate = useNavigate();
@@ -15,7 +17,7 @@ const Signup = () => {
    return (
       <S.Container>
          <S.HeroContainer>
-            <Header containerStyle={{ wrapper: '1600px' }}>
+            <Header>
                <Button
                   size={'small'}
                   variant={'primary'}
@@ -68,13 +70,15 @@ const Signup = () => {
 };
 
 const FormSignup = () => {
+   const { handleSetUserInformation } = useContext(RegistrationContext);
+
    return (
       <S.FormContainer>
          <p>
             Pronto para assistir? Informe seu email para criar ou reiniciar sua
             assinatura.
          </p>
-         <Form onSubmit={(formData) => alert(formData)}>
+         <Form onSubmit={handleSetUserInformation}>
             <Input
                type='email'
                name='email'

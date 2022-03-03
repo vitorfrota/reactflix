@@ -1,7 +1,7 @@
 import { styled } from '@/../stitches.config';
 
 export const Container = styled('main', {
-   wrapper: '1600px',
+   wrapper: '100%',
 });
 
 export const NavigationContainer = styled('nav', {

@@ -2,7 +2,7 @@ import { styled } from '@/../stitches.config';
 
 export const Container = styled('header', {
    width: '$full',
-   wrapper: '1600px',
+   wrapper: '100%',
    py: '$base',
    display: 'flex',
    alignItems: 'center',

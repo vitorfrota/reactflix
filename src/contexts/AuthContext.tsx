@@ -36,7 +36,6 @@ type Signup = {
    name: string;
    email: string;
    password: string;
-   cpassword: string;
 };
 
 type AuthContextType = {
@@ -99,7 +98,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       const { name, email, password } = formData;
 
       await createUserWithEmailAndPassword(auth, email, password)
-         .then(({ user }) => {
+         .then((_) => {
             const { currentUser } = auth;
 
             if (currentUser) {
@@ -111,9 +110,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
                });
             }
 
-            if (user) {
-               setUser(_getUser(user));
-            }
+            alert('Conta criada com sucesso!');
          })
          .catch((_) => {
             throw new Error('Houve um problema na criação da conta');

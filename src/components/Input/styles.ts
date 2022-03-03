@@ -40,7 +40,8 @@ export const Container = styled('div', {
             '& label': {
                position: 'absolute',
                top: '6px',
-               fontSize: '0.75rem',
+               fontSize: '0.875rem',
+               fontWeight: '$bold',
             },
          },
       },
@@ -51,7 +52,8 @@ export const Container = styled('div', {
             '& label': {
                position: 'absolute',
                top: '6px',
-               fontSize: '0.75rem',
+               fontSize: '0.875rem',
+               fontWeight: '$bold',
             },
          },
       },
@@ -68,6 +70,13 @@ export const Container = styled('div', {
                color: '$background',
             },
          },
+         whiteBordered: {
+            backgroundColor: '#fff',
+            border: '1px solid $gray300',
+            '& input': {
+               color: '$background',
+            },
+         },
       },
    },
    compoundVariants: [
@@ -76,6 +85,30 @@ export const Container = styled('div', {
          isFocused: true,
          css: {
             backgroundColor: '#fff',
+
+            '& input': {
+               color: '$background',
+            },
+         },
+      },
+      {
+         variant: 'whiteBordered',
+         isFocused: true,
+         css: {
+            backgroundColor: '#fff',
+            borderColor: '$blue',
+
+            '& input': {
+               color: '$background',
+            },
+         },
+      },
+      {
+         variant: 'whiteBordered',
+         isFilled: true,
+         css: {
+            backgroundColor: '#fff',
+            borderColor: '$green',
 
             '& input': {
                color: '$background',

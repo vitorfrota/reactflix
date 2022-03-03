@@ -15,7 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    label?: string;
    containerStyle?: {};
    icon?: React.ComponentType<IconBaseProps>;
-   variant?: 'white';
+   variant?: 'white' | 'whiteBordered';
    noRadius?: boolean;
 }
 

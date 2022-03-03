@@ -14,8 +14,11 @@ export const {
       colors: {
          primary: '#E50914',
          orange: '#E87C03',
+         green: '#5FA53F',
+         blue: '#0071EB',
          text: '#FFF',
          background: '#07090B',
+         gray100: '#E6E6E6',
          gray200: '#B3B3B3',
          gray300: '#8C8C8C',
          gray400: '#737373',
@@ -68,7 +71,7 @@ export const {
       py: (value: string) => ({ paddingTop: value, paddingBottom: value }),
       wrapper: (value: string) => ({
          margin: '0 auto',
-         px: '$base',
+         px: '$l',
          width: '$full',
          maxWidth: value,
       }),
