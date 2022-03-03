@@ -1,4 +1,4 @@
-import { styled } from '@/../stitches.config';
+import { styled, keyframes } from '@/../stitches.config';
 
 export const Container = styled('div', {
    width: '100vw',
@@ -7,4 +7,25 @@ export const Container = styled('div', {
    flexDirection: 'column',
    alignItems: 'center',
    justifyContent: 'center',
+});
+
+const spin = keyframes({
+   '0%': {
+      transform: 'rotate(0deg)',
+   },
+   '50%': {
+      transform: 'rotate(180deg)',
+   },
+   '100%': {
+      transform: 'rotate(360deg)',
+   },
+});
+
+export const SpinnerContainer = styled('div', {
+   width: '70px',
+   height: '70px',
+   border: '6px solid $gray600',
+   borderTop: '6px solid $primary',
+   borderRadius: '50%',
+   animation: `${spin} 300ms linear infinite`,
 });
