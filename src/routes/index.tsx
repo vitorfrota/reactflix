@@ -6,8 +6,11 @@ import Wrapper from './RouteWrapper';
 
 // layouts
 const OnboardingLayout = lazy(() => import('@/_layouts/Onboarding'));
+const ProfilingLayout = lazy(() => import('@/_layouts/Profiling'));
 const WatchingLayout = lazy(() => import('@/_layouts/Watching'));
 
+const AddProfile = lazy(() => import('@/pages/Browse/AddProfile'));
+const Browse = lazy(() => import('@/pages/Browse/Profiles'));
 const Explore = lazy(() => import('@/pages/Explore'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Signin = lazy(() => import('@/pages/Signin'));
@@ -18,6 +21,16 @@ const Naming = lazy(() => import('@/pages/Registration/Naming'));
 const Routes = () => {
    return (
       <AppRoutes>
+         <Route element={<ProfilingLayout />}>
+            <Route
+               path='/browse'
+               element={<Wrapper component={Browse} isPrivate />}
+            />
+            <Route
+               path='/browse/addProfile'
+               element={<Wrapper component={AddProfile} isPrivate />}
+            />
+         </Route>
          <Route path='/signin' element={<Wrapper component={Signin} />} />
          <Route path='/' element={<Wrapper component={Signup} />} />
          <Route path='signup' element={<OnboardingLayout />}>

@@ -8,6 +8,7 @@ export const Container = styled('button', {
    justifyContent: 'center',
    fontSize: '$base',
    fontWeight: '$bold',
+   border: '2px solid transparent',
    borderRadius: '4px',
 
    '& svg': {
@@ -19,6 +20,13 @@ export const Container = styled('button', {
          true: {
             opacity: '0.75',
             cursor: 'not-allowed',
+         },
+      },
+      outline: {
+         true: {
+            backgroundColor: 'transparent',
+            borderColor: '$gray400',
+            color: '$gray400',
          },
       },
       noRadius: {

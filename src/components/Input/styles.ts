@@ -1,5 +1,11 @@
 import { styled } from '@/../stitches.config';
 
+export const Wrapper = styled('div', {
+   width: '$full',
+   display: 'flex',
+   flexDirection: 'column',
+});
+
 export const Container = styled('div', {
    position: 'relative',
    width: '$full',

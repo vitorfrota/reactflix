@@ -7,6 +7,7 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    children: ReactNode;
    containerStyle?: any;
    loading?: boolean;
+   outline?: boolean;
    noRadius?: boolean;
    size?: 'full' | 'small';
    variant?: 'primary';
@@ -16,6 +17,7 @@ const Button = ({
    children,
    containerStyle,
    loading,
+   outline,
    noRadius,
    size,
    variant,
@@ -24,6 +26,7 @@ const Button = ({
    return (
       <S.Container
          loading={loading}
+         outline={outline}
          noRadius={noRadius}
          size={size}
          style={containerStyle}

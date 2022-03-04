@@ -65,6 +65,12 @@ export const FormContainer = styled('div', {
       '& label': {
          marginLeft: '4px',
       },
+
+      '& a': {
+         '&:hover': {
+            textDecoration: 'underline',
+         },
+      },
    },
 
    '& .signupNow': {

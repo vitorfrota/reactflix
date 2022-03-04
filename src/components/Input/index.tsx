@@ -62,7 +62,7 @@ const Input: React.FC<InputProps> = ({
    }, []);
 
    return (
-      <>
+      <S.Wrapper>
          <S.Container
             style={containerStyle}
             isFocused={isFocused}
@@ -82,7 +82,7 @@ const Input: React.FC<InputProps> = ({
             <span className='complement'>{complement}</span>
          </S.Container>
          {error && <S.Error>{error}</S.Error>}
-      </>
+      </S.Wrapper>
    );
 };
 

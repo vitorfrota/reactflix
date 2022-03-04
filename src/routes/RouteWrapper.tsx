@@ -18,11 +18,11 @@ const RouteWrapper = ({
    const { isLogged } = useAuth();
 
    useEffect(() => {
-      if (title !== '') document.title = `${title}`;
+      if (title !== '') document.title = `Reactflix ${title}`;
    }, [title]);
 
    if (isLogged && !isPrivate) {
-      return <Navigate to='/explore' state={{ from: location }} replace />;
+      return <Navigate to='/browse' state={{ from: location }} replace />;
    }
 
    if (!isLogged && isPrivate) {

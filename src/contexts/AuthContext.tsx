@@ -65,11 +65,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
          if (user) {
-            const { uid } = user;
             setUser(_getUser(user));
-
             setIsLogged(true);
-            localStorage.setItem('@reactflix:isLogged', JSON.stringify(uid));
+            localStorage.setItem(
+               '@reactflix:isLogged',
+               JSON.stringify(user.uid)
+            );
          }
       });
       return () => unsubscribe();

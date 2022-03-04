@@ -34,6 +34,10 @@ export default globalCss({
       outline: 0,
    },
 
+   fieldset: {
+      border: 0,
+   },
+
    '.wrapper': {
       width: '$full',
       maxWidth: '1600px',

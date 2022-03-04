@@ -101,10 +101,11 @@ const Signin = () => {
                      type='checkbox'
                      name='rememberLogin'
                      id='rememberLogin'
+                     defaultChecked
                   />
                   <label htmlFor='rembemberLogin'>Lembre-se de mim</label>
                </div>
-               <p>Precisa de ajuda?</p>
+               <Link to='/signin-help'>Precisa de ajuda?</Link>
             </div>
             <S.ButtonConnectWithGoogle onClick={handleConnectWithGoogle}>
                <img src={googleLogoImg} alt='google logo' />

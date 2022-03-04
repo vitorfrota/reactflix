@@ -71,7 +71,7 @@ export const {
       py: (value: string) => ({ paddingTop: value, paddingBottom: value }),
       wrapper: (value: string) => ({
          margin: '0 auto',
-         px: '$l',
+         px: '$base',
          width: '$full',
          maxWidth: value,
       }),
