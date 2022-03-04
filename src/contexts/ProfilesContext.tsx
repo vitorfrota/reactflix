@@ -5,7 +5,7 @@ import {
    useEffect,
    useState,
 } from 'react';
-import { ref, push, onValue } from 'firebase/database';
+import { ref, push, onValue, update, remove } from 'firebase/database';
 import {
    getStorage,
    ref as storageRef,
@@ -41,9 +41,14 @@ type ProfileContextType = {
    avatars: Avatar[];
    createProfile: (formData: ProfileFormData) => Promise<void>;
    currentProfile: Profile;
+   deleteProfile: (profileId: string) => Promise<void>;
    loading: boolean;
    profiles: Profile[];
    selectProfile: (profileId: string) => void;
+   updateProfile: (
+      profileId: string,
+      formData: ProfileFormData
+   ) => Promise<void>;
 };
 
 export const ProfileContext = createContext({} as ProfileContextType);
@@ -168,15 +173,66 @@ export function ProfileContextProvider({
       }
    };
 
+   const updateProfile = useCallback(
+      async (profileId: string, formData: ProfileFormData) => {
+         try {
+            const profileExists = profiles
+               .map((profile) => profile.id)
+               .includes(profileId);
+
+            if (profileExists) {
+               let updates: any = {};
+               updates['/user-profiles/' + user?.id + '/' + profileId] =
+                  formData;
+
+               await update(ref(db), updates);
+
+               const profileUpdated = {
+                  id: profileId,
+                  ...formData,
+               };
+
+               const filteredProfiles = profiles.filter(
+                  (profile) => profile.id !== profileId
+               );
+
+               setProfiles([...filteredProfiles, profileUpdated]);
+            }
+         } catch (_) {
+            new Error('Não foi possível atualizar o perfil. :(');
+         }
+      },
+      [user, profiles]
+   );
+
+   const deleteProfile = useCallback(
+      async (profileId: string) => {
+         remove(ref(db, `/user-profiles/${user?.id}/${profileId}`))
+            .then(() => {
+               const filteredProfiles = profiles.filter(
+                  (profile) => profile.id !== profileId
+               );
+
+               setProfiles(filteredProfiles);
+            })
+            .catch((_) => {
+               new Error('Não foi possível deletar o perfil :(');
+            });
+      },
+      [profiles]
+   );
+
    return (
       <ProfileContext.Provider
          value={{
             avatars,
             createProfile,
             currentProfile,
+            deleteProfile,
             loading,
             profiles,
             selectProfile,
+            updateProfile,
          }}
       >
          {children}

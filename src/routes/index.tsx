@@ -11,6 +11,7 @@ const WatchingLayout = lazy(() => import('@/_layouts/Watching'));
 
 const AddProfile = lazy(() => import('@/pages/Browse/AddProfile'));
 const Browse = lazy(() => import('@/pages/Browse/Profiles'));
+const EditProfile = lazy(() => import('@/pages/Browse/EditProfile'));
 const Explore = lazy(() => import('@/pages/Explore'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Signin = lazy(() => import('@/pages/Signin'));
@@ -29,6 +30,10 @@ const Routes = () => {
             <Route
                path='/browse/addProfile'
                element={<Wrapper component={AddProfile} isPrivate />}
+            />
+            <Route
+               path='/browse/editProfile'
+               element={<Wrapper component={EditProfile} isPrivate />}
             />
          </Route>
          <Route path='/signin' element={<Wrapper component={Signin} />} />

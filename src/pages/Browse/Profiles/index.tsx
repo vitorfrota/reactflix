@@ -1,24 +1,26 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiPlus } from 'react-icons/fi';
+import { FiEdit2, FiPlus } from 'react-icons/fi';
 
 import defaultAvatarImg from '@/assets/img/defaultAvatar.svg';
+import { Button, Spinner } from '@/components';
 import { useProfile } from '@/hooks/profile';
 
 import * as S from './styles';
-import { Spinner } from '@/components';
 
 const Profiles = () => {
    const navigate = useNavigate();
+   const [canEdit, setCanEdit] = useState(false);
 
    const { loading, profiles, selectProfile } = useProfile();
 
    const handleSelectProfile = useCallback(
       (profileId: string) => {
          selectProfile(profileId);
-         navigate('/explore');
+         const url = canEdit ? './editProfile' : '/explore';
+         navigate(url);
       },
-      [profiles]
+      [canEdit, profiles]
    );
 
    const canAddMoreProfile = useMemo(() => profiles.length < 4, [profiles]);
@@ -35,6 +37,7 @@ const Profiles = () => {
                <S.ProfileItem
                   key={profile.id}
                   onClick={() => handleSelectProfile(profile.id)}
+                  canEdit={canEdit}
                >
                   <img
                      src={profile.avatar}
@@ -42,6 +45,7 @@ const Profiles = () => {
                      onError={(e) => (e.currentTarget.src = defaultAvatarImg)}
                   />
                   <p>{profile.name}</p>
+                  {canEdit && <FiEdit2 />}
                </S.ProfileItem>
             ))}
             {canAddMoreProfile && (
@@ -50,6 +54,14 @@ const Profiles = () => {
                </S.AddProfileContainer>
             )}
          </S.ProfilesList>
+         <Button
+            containerStyle={{ marginTop: '5rem', textTransform: 'uppercase' }}
+            onClick={() => setCanEdit((state) => !state)}
+            noRadius
+            outline={!canEdit}
+         >
+            {canEdit ? 'feito' : 'gerenciar perfis'}
+         </Button>
       </>
    );
 };
