@@ -12,6 +12,19 @@ const spin = keyframes({
    },
 });
 
+export const Wrapper = styled('div', {
+   display: 'grid',
+   placeContent: 'center',
+   overflow: 'hidden',
+   variants: {
+      fullScreen: {
+         true: {
+            width: '100%',
+         },
+      },
+   },
+});
+
 export const Container = styled('div', {
    width: '120px',
    height: '120px',

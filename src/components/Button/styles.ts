@@ -12,10 +12,23 @@ export const Container = styled('button', {
    borderRadius: '4px',
 
    '& svg': {
-      mx: '$s',
+      width: '1.25rem',
+      height: '1.25rem',
    },
 
    variants: {
+      iconSide: {
+         left: {
+            '& svg': {
+               marginRight: '4px',
+            },
+         },
+         right: {
+            '& svg': {
+               marginLeft: '4px',
+            },
+         },
+      },
       loading: {
          true: {
             opacity: '0.75',

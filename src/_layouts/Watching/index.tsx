@@ -1,27 +1,25 @@
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Header as HeaderComponent, Profile } from '@/components';
 import { useProfile } from '@/hooks/profile';
 import Loading from '@/pages/Loading';
 
 import * as S from './styles';
-import { useEffect } from 'react';
+
+const queryClient = new QueryClient();
 
 const Watching = () => {
-   const navigate = useNavigate();
-   const { currentProfile, profiles } = useProfile();
+   const { currentProfile } = useProfile();
 
-   useEffect(() => {
-      if (profiles.length === 0) {
-         navigate('/browse');
-      }
-   }, [profiles]);
    if (!currentProfile.id) return <Loading />;
 
    return (
       <S.Container>
          <Header />
-         <Outlet />
+         <QueryClientProvider client={queryClient}>
+            <Outlet />
+         </QueryClientProvider>
       </S.Container>
    );
 };

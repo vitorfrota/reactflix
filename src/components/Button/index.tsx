@@ -6,6 +6,7 @@ import * as S from './styles';
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    children: ReactNode;
    containerStyle?: any;
+   iconSide?: 'left' | 'right';
    loading?: boolean;
    outline?: boolean;
    noRadius?: boolean;
@@ -16,6 +17,7 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = ({
    children,
    containerStyle,
+   iconSide,
    loading,
    outline,
    noRadius,
@@ -25,6 +27,7 @@ const Button = ({
 }: IButtonProps) => {
    return (
       <S.Container
+         iconSide={iconSide}
          loading={loading}
          outline={outline}
          noRadius={noRadius}
