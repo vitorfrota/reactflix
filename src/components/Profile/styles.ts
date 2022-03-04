@@ -28,13 +28,47 @@ export const MenuContainer = styled('div', {
    alignItems: 'flex-start',
    backgroundColor: '$gray700',
 
+   '& .menuList': {
+      paddingTop: '$base',
+
+      '& li': {
+         fontSize: '$base',
+         fontWeight: '$medium',
+         cursor: 'pointer',
+
+         '& + li': {
+            marginTop: '$base',
+         },
+      },
+   },
+});
+
+export const ProfilesList = styled('ul', {
+   width: '$full',
+   paddingBottom: '$base',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '$base',
+   borderBottom: '1px solid $gray600',
    '& li': {
-      fontSize: '$base',
-      fontWeight: '$medium',
+      display: 'flex',
+      alignItems: 'center',
       cursor: 'pointer',
 
-      '& + li': {
-         marginTop: '$base',
+      '& img': {
+         width: '$l',
+         height: '$l',
+         borderRadius: '50%',
+      },
+
+      '& p': {
+         marginLeft: '8px',
+         fontSize: '0.875rem',
+         color: '$gray200',
+      },
+
+      '&:hover': {
+         opacity: '0.75',
       },
    },
 });

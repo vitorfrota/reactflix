@@ -5,12 +5,11 @@ import {
    useEffect,
    useState,
 } from 'react';
-import { ref, push, onValue, update } from 'firebase/database';
+import { ref, push, onValue } from 'firebase/database';
 import {
    getStorage,
    ref as storageRef,
    listAll,
-   getMetadata,
    getDownloadURL,
 } from 'firebase/storage';
 
@@ -56,10 +55,32 @@ export function ProfileContextProvider({
    const { user } = useAuth();
 
    const [avatars, setAvatars] = useState<Avatar[]>([]);
-
-   const [currentProfile, setCurrentProfile] = useState<Profile>({} as Profile);
    const [loading, setLoading] = useState(true);
+
    const [profiles, setProfiles] = useState<Profile[]>([]);
+   const [currentProfile, setCurrentProfile] = useState<Profile>({} as Profile);
+
+   useEffect(() => {
+      const storage = getStorage();
+
+      const avatarsListRef = storageRef(storage, 'avatars/');
+
+      listAll(avatarsListRef)
+         .then((res) => {
+            res.items.forEach((itemRef, index) => {
+               getDownloadURL(storageRef(storage, itemRef.fullPath)).then(
+                  (url) => {
+                     setAvatars((state) => {
+                        return [...state, { id: index, path: url }];
+                     });
+                  }
+               );
+            });
+         })
+         .catch((error) => {
+            console.log('Erro em nosso sistema :(');
+         });
+   }, []);
 
    useEffect(() => {
       if (user) {
@@ -86,26 +107,22 @@ export function ProfileContextProvider({
    }, [user]);
 
    useEffect(() => {
-      const storage = getStorage();
+      const currentProfileId = localStorage.getItem(
+         '@reactflix:currentProfile'
+      );
 
-      const avatarsListRef = storageRef(storage, 'avatars/');
+      if (!currentProfileId) navigate('/browse');
 
-      listAll(avatarsListRef)
-         .then((res) => {
-            res.items.forEach((itemRef, index) => {
-               getDownloadURL(storageRef(storage, itemRef.fullPath)).then(
-                  (url) => {
-                     setAvatars((state) => {
-                        return [...state, { id: index, path: url }];
-                     });
-                  }
-               );
-            });
-         })
-         .catch((error) => {
-            console.log('Erro em nosso sistema :(');
-         });
-   }, []);
+      if (profiles.length > 0) {
+         const profileEncountered = profiles.find(
+            (profile) => profile.id === currentProfileId
+         );
+
+         if (profileEncountered) {
+            setCurrentProfile(profileEncountered);
+         }
+      }
+   }, [profiles]);
 
    const createProfile = useCallback(
       async (formData: ProfileFormData) => {
@@ -136,18 +153,20 @@ export function ProfileContextProvider({
       [user, profiles]
    );
 
-   const selectProfile = useCallback(
-      (profileId: string) => {
-         const profileEncountered = profiles.find(
-            (profile) => profile.id === profileId
-         );
+   const selectProfile = (profileId: string) => {
+      const profileEncountered = profiles.find(
+         (profile) => profile.id === profileId
+      );
 
-         if (profileEncountered) {
-            setCurrentProfile(profileEncountered);
-         }
-      },
-      [profiles]
-   );
+      if (!!profileEncountered) {
+         setCurrentProfile(profileEncountered);
+
+         localStorage.setItem(
+            '@reactflix:currentProfile',
+            profileEncountered.id
+         );
+      }
+   };
 
    return (
       <ProfileContext.Provider

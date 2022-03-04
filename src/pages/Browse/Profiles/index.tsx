@@ -13,10 +13,13 @@ const Profiles = () => {
 
    const { loading, profiles, selectProfile } = useProfile();
 
-   const handleSelectProfile = useCallback((profileId: string) => {
-      selectProfile(profileId);
-      navigate('/explore');
-   }, []);
+   const handleSelectProfile = useCallback(
+      (profileId: string) => {
+         selectProfile(profileId);
+         navigate('/explore');
+      },
+      [profiles]
+   );
 
    const canAddMoreProfile = useMemo(() => profiles.length < 4, [profiles]);
 

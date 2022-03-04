@@ -119,7 +119,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       await signOutGoogle(auth)
          .then(() => {
             setUser({} as User);
-            localStorage.removeItem('@reactflix:isLogged');
+            localStorage.clear();
          })
          .finally(() => setIsLogged(false));
    }, []);
