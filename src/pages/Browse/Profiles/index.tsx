@@ -54,14 +54,19 @@ const Profiles = () => {
                </S.AddProfileContainer>
             )}
          </S.ProfilesList>
-         <Button
-            containerStyle={{ marginTop: '5rem', textTransform: 'uppercase' }}
-            onClick={() => setCanEdit((state) => !state)}
-            noRadius
-            outline={!canEdit}
-         >
-            {canEdit ? 'feito' : 'gerenciar perfis'}
-         </Button>
+         {profiles.length > 0 && (
+            <Button
+               containerStyle={{
+                  marginTop: '5rem',
+                  textTransform: 'uppercase',
+               }}
+               onClick={() => setCanEdit((state) => !state)}
+               noRadius
+               outline={!canEdit}
+            >
+               {canEdit ? 'feito' : 'gerenciar perfis'}
+            </Button>
+         )}
       </>
    );
 };

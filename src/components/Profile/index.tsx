@@ -83,7 +83,7 @@ const Profile = () => {
                      Ajuda
                   </li>
                   <li onClick={handleSignout} tabIndex={0}>
-                     Sair da minha conta
+                     Sair do Reactflix
                   </li>
                </ul>
             </S.MenuContainer>
