@@ -36,7 +36,9 @@ const EditProfile = () => {
             formRef.current?.setErrors({});
 
             const schema = Yup.object().shape({
-               name: Yup.string().required('Nome obrigatório'),
+               name: Yup.string()
+                  .max(16, 'Máximo de 16 caracteres para nomear')
+                  .required('Nome obrigatório'),
             });
 
             await schema.validate(formData, {
@@ -80,7 +82,7 @@ const EditProfile = () => {
                   selectedAvatar={selectedAvatar}
                   cb={setSelectedAvatar}
                />
-               <Input type='text' name='name' label='Nome' />
+               <Input type='text' name='name' label='Nome' maxLength={16} />
             </fieldset>
             <div className='row'>
                <Button type='submit' noRadius>
