@@ -32,7 +32,7 @@ const Header = () => {
          <S.NavigationContainer>
             <ul>
                <li className={(location.pathname = '/explore') && 'active'}>
-                  <Link to='/'>Explore</Link>
+                  <Link to='/explore'>Explore</Link>
                </li>
             </ul>
          </S.NavigationContainer>

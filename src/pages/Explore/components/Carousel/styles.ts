@@ -7,7 +7,6 @@ const boxShadow =
    'inset 0 -30px 60px rgba(7,9,11,0.8)';
 
 export const Container = styled('section', {
-   zIndex: -1,
    position: 'absolute',
    top: 0,
    left: 0,

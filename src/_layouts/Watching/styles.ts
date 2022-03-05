@@ -1,7 +1,15 @@
 import { styled } from '@/../stitches.config';
 
 export const Container = styled('main', {
+   width: '$full',
    wrapper: '100%',
+
+   '& > header': {
+      zIndex: 1,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+   },
 });
 
 export const NavigationContainer = styled('nav', {
