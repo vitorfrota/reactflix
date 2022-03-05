@@ -12,3 +12,10 @@ export const Container = styled('div', {
       },
    },
 });
+
+export const LoadingContainer = styled('div', {
+   wrapper: '100%',
+   height: '100vh',
+   display: 'grid',
+   placeContent: 'center',
+});

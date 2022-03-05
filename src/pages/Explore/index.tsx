@@ -14,9 +14,9 @@ const Explore = () => {
 
    if (isLoading && !data) {
       return (
-         <S.Container>
+         <S.LoadingContainer>
             <Spinner size='large' fullScreen />
-         </S.Container>
+         </S.LoadingContainer>
       );
    }
 
