@@ -23,7 +23,6 @@ const Catalog = ({ heading, titles }: ICatalogProps) => {
 
    const [horizontalPosition, setHorizontalPosition] = useState(0);
    const [titleHovered, setTitleHovered] = useState(false);
-
    const [showButton, setShowButton] = useState({
       left: false,
       right: true,
@@ -76,14 +75,7 @@ const Catalog = ({ heading, titles }: ICatalogProps) => {
    return (
       <S.Container>
          <h2>{heading}</h2>
-         {showButton.left && (
-            <button
-               onClick={() => handleScrollCatalog('left')}
-               style={{ left: '-1rem' }}
-            >
-               <FiChevronLeft />
-            </button>
-         )}
+         {showButton.left && <Button cb={handleScrollCatalog} side='left' />}
          <S.CatalogContainer ref={catalogRef} titleHovered={titleHovered}>
             {titles.map((title) => (
                <S.Title
@@ -101,15 +93,24 @@ const Catalog = ({ heading, titles }: ICatalogProps) => {
                </S.Title>
             ))}
          </S.CatalogContainer>
-         {showButton.right && (
-            <button
-               onClick={() => handleScrollCatalog('right')}
-               style={{ right: '-1rem' }}
-            >
-               <FiChevronRight />
-            </button>
-         )}
+         {showButton.right && <Button cb={handleScrollCatalog} side='right' />}
       </S.Container>
+   );
+};
+
+interface IButtonProps {
+   cb: (side: 'left' | 'right') => void;
+   side: 'left' | 'right';
+}
+
+const Button = ({ cb, side }: IButtonProps) => {
+   const Icon = side === 'left' ? FiChevronLeft : FiChevronRight;
+   const style = side === 'left' ? { left: '-1rem' } : { right: '-1rem' };
+
+   return (
+      <button onClick={() => cb(side)} style={style}>
+         <Icon />
+      </button>
    );
 };
 
