@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { FiEdit2, FiPlus } from 'react-icons/fi';
 
 import defaultAvatarImg from '@/assets/img/defaultAvatar.svg';
-import { Button, Spinner } from '@/components';
+import { Button } from '@/components';
 import { useProfile } from '@/hooks/profile';
+import Loading from '@/pages/Loading';
 
 import * as S from './styles';
 
@@ -26,7 +27,7 @@ const Profiles = () => {
    const canAddMoreProfile = useMemo(() => profiles.length < 4, [profiles]);
 
    if (loading) {
-      return <Spinner size='large' />;
+      return <Loading />;
    }
 
    return (

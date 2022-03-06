@@ -5,7 +5,7 @@ import { FiPlay, FiPlus } from 'react-icons/fi';
 import { Button } from '@/components';
 import * as S from './styles';
 
-interface Movie {
+interface Title {
    id: number;
    title: string;
    overview: string;
@@ -13,26 +13,26 @@ interface Movie {
 }
 
 interface CarouselProps {
-   movies: Movie[];
+   titles: Title[];
 }
 
 const SECONDS_TO_SHOW_NEXT_MOVIE = 6 * 100 * 10; // 6 seconds
 
-const Carousel = ({ movies }: CarouselProps) => {
+const Carousel = ({ titles }: CarouselProps) => {
    const navigate = useNavigate();
 
-   const [movieToShow, setMovieToShow] = useState(0);
-   const [currentMovie, setCurrentMovie] = useState<Movie>({} as Movie);
+   const [featuredTitleIndex, setFeaturedTitleIndex] = useState(0);
+   const [featuredTitle, setFeaturedTitle] = useState<Title>({} as Title);
 
    useEffect(() => {
-      movieToShow < movies.length
-         ? setCurrentMovie(movies[movieToShow])
-         : setMovieToShow(0);
-   }, [movieToShow]);
+      featuredTitleIndex < titles.length
+         ? setFeaturedTitle(titles[featuredTitleIndex])
+         : setFeaturedTitleIndex(0);
+   }, [featuredTitleIndex]);
 
    useEffect(() => {
       const intervalId = setInterval(() => {
-         setMovieToShow((state) => state + 1);
+         setFeaturedTitleIndex((state) => state + 1);
       }, SECONDS_TO_SHOW_NEXT_MOVIE);
 
       return () => clearInterval(intervalId);
@@ -41,16 +41,16 @@ const Carousel = ({ movies }: CarouselProps) => {
    return (
       <S.Container
          style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')`,
+            backgroundImage: `url('https://image.tmdb.org/t/p/original${featuredTitle.backdrop_path}')`,
          }}
       >
          <div className='movieContent'>
-            <h1>{currentMovie.title}</h1>
-            <p>{currentMovie.overview}</p>
+            <h1>{featuredTitle.title}</h1>
+            <p>{featuredTitle.overview}</p>
             <div className='groupButtons'>
                <Button
                   iconSide='left'
-                  onClick={() => navigate(`/watch/${currentMovie.id}`)}
+                  onClick={() => navigate(`/title/${featuredTitle.id}`)}
                >
                   <FiPlay style={{ fill: '#000' }} />
                   Assistir

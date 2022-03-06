@@ -22,6 +22,7 @@ export const Container = styled('section', {
    '& .movieContent': {
       height: '35vh',
       wrapper: '1600px',
+      px: 0,
       margin: '0 auto',
       display: 'flex',
       flexDirection: 'column',

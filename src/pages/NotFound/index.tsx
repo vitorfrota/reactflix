@@ -2,18 +2,11 @@ import { Link } from 'react-router-dom';
 
 import { Header } from '@/components';
 
-import notFoundImg from '@/assets/img/notFound.jpg';
-
 import * as S from './styles';
 
 const NotFound = () => {
-   const containerStyles = {
-      background: `url(${notFoundImg}) no-repeat 100%`,
-      backgroundSize: 'cover',
-   };
-
    return (
-      <S.Container style={containerStyles}>
+      <S.Container>
          <Header fixed />
          <h1>Você se perdeu?</h1>
          <p>

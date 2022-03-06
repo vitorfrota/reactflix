@@ -1,12 +1,24 @@
 import { styled } from '@/../stitches.config';
 
-const duration = '200ms';
-const itemWidth = 360;
-const itemHeight = itemWidth / (16 / 9);
+const linearGradientDark = (side: 'left' | 'right') => {
+   return (
+      `linear-gradient(to ${side},` +
+      'rgba(7,9,11, 1),' +
+      'rgba(7,9,11, 0.75),' +
+      'rgba(7,9,11, 0.5),' +
+      'rgba(7,9,11, 0.25),' +
+      'transparent)'
+   );
+};
 
-export const Container = styled('div', {
+export const Container = styled('section', {
+   $$width: '360px',
+   $$height: 'calc($$width / 1.77)',
+   $$duration: '200ms',
+
    position: 'relative',
    width: '100%',
+   px: '$base',
 
    '& h2': {
       marginBottom: '$base',
@@ -14,80 +26,82 @@ export const Container = styled('div', {
    },
 
    '& button': {
-      zIndex: '4',
+      zIndex: 2,
       position: 'absolute',
-      top: '50%',
-      backgroundColor: 'transparent',
-      border: 0,
+      top: '55%',
+      background: 'transparent',
 
       '& svg': {
-         width: '$xxl',
-         height: '$xxl',
-         color: '#fff',
+         width: '$l',
+         height: '$l',
+         color: '$primary',
       },
    },
 });
-
 export const CatalogContainer = styled('ul', {
+   position: 'relative',
    width: '$full',
 
-   transition: `all ${duration} linear`,
    overflowX: 'scroll',
    whiteSpace: 'nowrap',
    scrollBehavior: 'smooth',
 
+   '-ms-overflow-style': 'none',
+   'scrollbar-width': 'none',
    '&::-webkit-scrollbar': {
       display: 'none',
    },
 
-   '-ms-overflow-style': 'none',
-   'scrollbar-width': 'none',
-
-   '&:hover': {
-      '& li': {
-         opacity: '0.3',
-
-         '&:hover': {
-            opacity: 1,
-         },
-      },
-   },
-
    '&:before': {
       content: '',
+      zIndex: '2',
       position: 'absolute',
-      zIndex: 2,
-      left: '0',
-      width: '60px',
-      height: `${itemHeight}px`,
-      background: 'linear-gradient(to right, rgba(7,9,11, 1), transparent)',
+      top: 0,
+      left: '-1rem',
+      height: '$$height',
+      width: '40px',
+      background: linearGradientDark('right'),
    },
 
    '&:after': {
       content: '',
       position: 'absolute',
-      right: '0',
-      width: '60px',
-      height: `${itemHeight}px`,
-      background: 'linear-gradient(to left, rgba(7,9,11, 1), transparent)',
+      top: 0,
+      right: 0,
+      height: '$$height',
+      width: '120px',
+      background: linearGradientDark('left'),
+   },
+   variants: {
+      titleHovered: {
+         true: {
+            '& li': {
+               opacity: '0.3',
+
+               '&:hover': {
+                  opacity: '1',
+               },
+            },
+         },
+      },
    },
 });
 
-export const ItemCatalog = styled('li', {
+export const Title = styled('li', {
    position: 'relative',
-   width: `${itemWidth}px`,
-   height: `${itemHeight}px`,
+   width: '$$width',
+   height: '$$height',
    padding: '$base',
    display: 'inline-block',
    backgroundSize: 'cover',
    border: '2px solid $background',
    borderRadius: '2px',
-   boxShadow: 'inset 0 -80px 40px rgba(0,0,0,0.5)',
+   boxShadow: 'inset 0 -40px 40px rgba(7,9,11, 0.75)',
    cursor: 'pointer',
 
-   transition: `all ${duration} linear`,
+   transition: 'all $$duration ease-in-out',
 
-   '& > div': {
+   '& > p': {
       position: 'absolute',
       bottom: '$base',
       left: '$base',

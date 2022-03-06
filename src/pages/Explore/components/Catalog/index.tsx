@@ -1,80 +1,110 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import * as S from './styles';
 
-interface Movie {
+// TO STEPS WHEN CLICK TO SCROLL CATALOG (IN PX), CSS TITLE ALSO IS 360px
+const WIDTH_STEP = 360;
+const URL_POSTER_PATH = 'https://image.tmdb.org/t/p/w342';
+
+interface Title {
    id: number;
    title: string;
    poster_path: string;
 }
 
 interface ICatalogProps {
-   movies: Movie[];
-   title: string;
+   heading: string;
+   titles: Title[];
 }
 
-const Catalog = ({ movies, title }: ICatalogProps) => {
+const Catalog = ({ heading, titles }: ICatalogProps) => {
    const catalogRef = useRef<HTMLUListElement>(null);
 
-   const [position, setPosition] = useState(0);
-   const [catalogWidthToScroll, setCatalogWidthToScroll] = useState(1);
+   const [horizontalPosition, setHorizontalPosition] = useState(0);
+   const [titleHovered, setTitleHovered] = useState(false);
 
-   useEffect(() => {
-      if (catalogRef.current) {
-         setCatalogWidthToScroll(catalogRef.current.clientWidth);
-      }
-   }, [catalogRef.current]);
+   const [showButton, setShowButton] = useState({
+      left: false,
+      right: true,
+   });
 
    const handleScrollCatalog = useCallback(
       (side: string) => {
-         let STEP_WIDTH = 360; // px to step;
+         // is poisiton axis X
+         let newPosition = horizontalPosition;
 
          if (catalogRef.current) {
-            const { scrollLeft } = catalogRef.current;
+            const { current } = catalogRef;
 
-            let newPosition = scrollLeft;
+            const lastTitle = current.lastElementChild;
 
-            side === 'left'
-               ? (newPosition -= STEP_WIDTH)
-               : (newPosition += STEP_WIDTH);
+            if (lastTitle) {
+               const leftSideLastTitle = lastTitle.getBoundingClientRect().left;
 
-            catalogRef.current.scrollLeft = newPosition;
-            setPosition(newPosition);
+               if (side === 'right') {
+                  !showButton.left &&
+                     setShowButton((state) => {
+                        return { ...state, left: true };
+                     });
+
+                  leftSideLastTitle < window.innerWidth &&
+                     setShowButton((state) => {
+                        return { ...state, right: false };
+                     });
+
+                  newPosition -= WIDTH_STEP;
+               } else {
+                  newPosition += WIDTH_STEP;
+                  !showButton.right &&
+                     setShowButton((state) => {
+                        return { ...state, right: true };
+                     });
+
+                  newPosition === 0 &&
+                     setShowButton((state) => {
+                        return { ...state, left: false };
+                     });
+               }
+            }
+            setHorizontalPosition(newPosition);
          }
       },
-      [catalogRef.current]
+      [horizontalPosition, window]
    );
 
    return (
       <S.Container>
-         <h2>{title}</h2>
-         {position > 0 && (
+         <h2>{heading}</h2>
+         {showButton.left && (
             <button
                onClick={() => handleScrollCatalog('left')}
-               style={{ left: 0 }}
+               style={{ left: '-1rem' }}
             >
                <FiChevronLeft />
             </button>
          )}
-         <S.CatalogContainer ref={catalogRef}>
-            {movies.map((movie) => (
-               <S.ItemCatalog
-                  key={movie.id}
-                  style={{
-                     backgroundImage: `url('https://image.tmdb.org/t/p/w342${movie.poster_path}')`,
+         <S.CatalogContainer ref={catalogRef} titleHovered={titleHovered}>
+            {titles.map((title) => (
+               <S.Title
+                  key={title.id}
+                  css={{
+                     backgroundImage: `url('${
+                        URL_POSTER_PATH + title.poster_path
+                     }')`,
+                     transform: `translateX(${horizontalPosition}px)`,
                   }}
+                  onMouseEnter={() => setTitleHovered(true)}
+                  onMouseLeave={() => setTitleHovered(false)}
                >
-                  <div>
-                     <p>{movie.title}</p>
-                  </div>
-               </S.ItemCatalog>
+                  <p>{title.title}</p>
+               </S.Title>
             ))}
          </S.CatalogContainer>
-         {position < catalogWidthToScroll && (
+         {showButton.right && (
             <button
                onClick={() => handleScrollCatalog('right')}
-               style={{ right: 0 }}
+               style={{ right: '-1rem' }}
             >
                <FiChevronRight />
             </button>

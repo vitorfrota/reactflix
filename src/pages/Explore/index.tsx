@@ -1,5 +1,6 @@
-import { Spinner } from '@/components';
 import { useFetch } from '@/hooks/fetch';
+import Loading from '@/pages/Loading';
+import Error from '@/pages/Error';
 
 import Carousel from './components/Carousel';
 import Catalog from './components/Catalog';
@@ -12,25 +13,21 @@ const Explore = () => {
       '/movie/popular'
    );
 
-   if (isLoading && !data) {
-      return (
-         <S.LoadingContainer>
-            <Spinner size='large' fullScreen />
-         </S.LoadingContainer>
-      );
+   if (isLoading) {
+      return <Loading />;
    }
 
    if (isError) {
-      return <p>Deu ruim :(</p>;
+      return <Error />;
    }
 
    return (
       <S.Container>
-         <Carousel movies={data.results} />
-         <section className='catalogs'>
-            <Catalog title='Popular' movies={data.results} />
-            <Catalog title='Em alta' movies={data.results} />
-         </section>
+         <Carousel titles={data.results} />
+         <div className='catalogs'>
+            <Catalog heading='Popular' titles={data.results} />
+            <Catalog heading='Em alta' titles={data.results} />
+         </div>
       </S.Container>
    );
 };

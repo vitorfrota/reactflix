@@ -1,15 +1,18 @@
 import { styled } from '@/../stitches.config';
 
-import notFoundImg from '@/assets/img/notFound.jpg';
+import errorImg from '@/assets/img/error.jpg';
 
 export const Container = styled('div', {
-   width: '100vw',
+   position: 'absolute',
+   top: 0,
+   left: 0,
+   width: '100%',
    height: '100vh',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
    justifyContent: 'center',
-   background: `url(${notFoundImg}) no-repeat 100%`,
+   background: `url(${errorImg}) no-repeat 100%`,
    backgroundSize: 'cover',
    color: '$text',
    textAlign: 'center',
