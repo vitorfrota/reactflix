@@ -133,6 +133,8 @@ export function ProfileContextProvider({
       if (profileEncountered) {
          setCurrentProfile(profileEncountered);
          localStorage.setItem(LOCAL_STORAGE_KEY, profileEncountered.id);
+
+         navigate('/explore');
       }
    };
 

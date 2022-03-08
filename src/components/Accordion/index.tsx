@@ -3,12 +3,12 @@ import { FiPlus } from 'react-icons/fi';
 
 import * as S from './styles';
 
-interface FaqItemProps {
+interface AccordionProps {
    question: string;
    answer: string;
 }
 
-const FaqItem = ({ question, answer }: FaqItemProps) => {
+const Accordion = ({ question, answer }: AccordionProps) => {
    const [showAnswer, setShowAnswer] = useState(false);
    return (
       <S.Container
@@ -28,4 +28,4 @@ const FaqItem = ({ question, answer }: FaqItemProps) => {
    );
 };
 
-export default FaqItem;
+export default Accordion;

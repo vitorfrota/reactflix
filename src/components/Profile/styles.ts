@@ -6,13 +6,19 @@ export const Container = styled('div', {
 
 export const BadgeContainer = styled('button', {
    display: 'flex',
-   flexDirection: 'column',
+   alignItems: 'center',
    backgroundColor: 'transparent',
 
    '& img': {
+      marginRight: '$s',
       width: '$xl',
       height: '$xl',
       borderRadius: '50%',
+   },
+
+   '& p': {
+      color: '#fff',
+      fontWeight: '$medium',
    },
 });
 

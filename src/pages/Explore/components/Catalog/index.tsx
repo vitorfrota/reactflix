@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
 
@@ -19,6 +20,7 @@ interface ICatalogProps {
 }
 
 const Catalog = ({ heading, titles }: ICatalogProps) => {
+   const navigate = useNavigate();
    const catalogRef = useRef<HTMLUListElement>(null);
 
    const [horizontalPosition, setHorizontalPosition] = useState(0);
@@ -85,6 +87,7 @@ const Catalog = ({ heading, titles }: ICatalogProps) => {
                   }}
                   onMouseEnter={() => setTitleHovered(true)}
                   onMouseLeave={() => setTitleHovered(false)}
+                  onClick={() => navigate(`../title/${title.id}`)}
                >
                   <img
                      src={`${URL_POSTER_PATH + title.backdrop_path}`}

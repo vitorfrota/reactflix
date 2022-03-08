@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FiChevronRight } from 'react-icons/fi';
 
-import { Button, FaqItem, Header, Input } from '@/components';
+import { Button, Accordion, Header, Input } from '@/components';
 import { ISectionSignUp, sections } from '@/constants/sectionsLanding';
 import faqQuestions from '@/constants/faqQuestions';
 import { RegistrationContext } from '@/contexts/RegistrationContext';
@@ -48,7 +48,7 @@ const Signup = () => {
                <h1>Perguntas frequentes</h1>
                <ul className='faqListContainer'>
                   {faqQuestions.map((question, index) => (
-                     <FaqItem
+                     <Accordion
                         key={index}
                         question={question.question}
                         answer={question.answer}

@@ -18,6 +18,7 @@ const Signin = lazy(() => import('@/pages/Signin'));
 const Signup = lazy(() => import('@/pages/Signup'));
 const Creating = lazy(() => import('@/pages/Registration/Creating'));
 const Naming = lazy(() => import('@/pages/Registration/Naming'));
+const Title = lazy(() => import('@/pages/Title'));
 
 const Routes = () => {
    return (
@@ -55,6 +56,10 @@ const Routes = () => {
                      isPrivate
                   />
                }
+            />
+            <Route
+               path='title/:titleId'
+               element={<Wrapper component={Title} isPrivate />}
             />
          </Route>
          <Route path='*' element={<NotFound />} />
