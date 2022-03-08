@@ -17,7 +17,14 @@ export const Container = styled('section', {
    backgroundSize: 'cover',
    boxShadow: boxShadow,
 
-   transition: 'all 500ms ease-in-out',
+   '& .backgroundImage': {
+      zIndex: '-1',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '$full',
+      height: '70vh',
+   },
 
    '& .movieContent': {
       height: '35vh',

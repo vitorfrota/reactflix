@@ -21,14 +21,12 @@ const Profiles = () => {
          const url = canEdit ? './editProfile' : '/explore';
          navigate(url);
       },
-      [canEdit, profiles]
+      [canEdit]
    );
 
    const canAddMoreProfile = useMemo(() => profiles.length < 4, [profiles]);
 
-   if (loading) {
-      return <Loading />;
-   }
+   if (loading) return <Loading />;
 
    return (
       <>
@@ -38,11 +36,14 @@ const Profiles = () => {
                <S.ProfileItem
                   key={profile.id}
                   onClick={() => handleSelectProfile(profile.id)}
+                  onKeyPress={() => handleSelectProfile(profile.id)}
                   canEdit={canEdit}
+                  tabIndex={0}
                >
                   <img
                      src={profile.avatar}
                      alt={`avatar ${profile.name}`}
+                     loading='lazy'
                      onError={(e) => (e.currentTarget.src = defaultAvatarImg)}
                   />
                   <p>{profile.name}</p>
@@ -50,7 +51,11 @@ const Profiles = () => {
                </S.ProfileItem>
             ))}
             {canAddMoreProfile && (
-               <S.AddProfileContainer onClick={() => navigate('addProfile')}>
+               <S.AddProfileContainer
+                  onClick={() => navigate('addProfile')}
+                  onKeyPress={() => navigate('addProfile')}
+                  tabIndex={0}
+               >
                   <FiPlus />
                </S.AddProfileContainer>
             )}

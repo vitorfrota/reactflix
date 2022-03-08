@@ -5,6 +5,8 @@ import { FiPlay, FiPlus } from 'react-icons/fi';
 import { Button } from '@/components';
 import * as S from './styles';
 
+const URL_BACKDROP_PATH = 'https://image.tmdb.org/t/p/original';
+
 interface Title {
    id: number;
    title: string;
@@ -16,7 +18,7 @@ interface CarouselProps {
    titles: Title[];
 }
 
-const SECONDS_TO_SHOW_NEXT_MOVIE = 6 * 100 * 10; // 6 seconds
+const SECONDS_TO_SHOW_NEXT_MOVIE = 8 * 100 * 10; // 8 seconds
 
 const Carousel = ({ titles }: CarouselProps) => {
    const navigate = useNavigate();
@@ -39,11 +41,13 @@ const Carousel = ({ titles }: CarouselProps) => {
    }, []);
 
    return (
-      <S.Container
-         style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/original${featuredTitle.backdrop_path}')`,
-         }}
-      >
+      <S.Container>
+         <img
+            src={URL_BACKDROP_PATH + featuredTitle.backdrop_path}
+            alt=''
+            loading='lazy'
+            className='backgroundImage'
+         />
          <div className='movieContent'>
             <h1>{featuredTitle.title}</h1>
             <p>{featuredTitle.overview}</p>

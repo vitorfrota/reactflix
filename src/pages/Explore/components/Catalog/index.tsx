@@ -5,12 +5,12 @@ import * as S from './styles';
 
 // TO STEPS WHEN CLICK TO SCROLL CATALOG (IN PX), CSS TITLE ALSO IS 360px
 const WIDTH_STEP = 360;
-const URL_POSTER_PATH = 'https://image.tmdb.org/t/p/w342';
+const URL_POSTER_PATH = 'https://image.tmdb.org/t/p/w300';
 
 interface Title {
    id: number;
    title: string;
-   poster_path: string;
+   backdrop_path: string;
 }
 
 interface ICatalogProps {
@@ -81,14 +81,17 @@ const Catalog = ({ heading, titles }: ICatalogProps) => {
                <S.Title
                   key={title.id}
                   css={{
-                     backgroundImage: `url('${
-                        URL_POSTER_PATH + title.poster_path
-                     }')`,
                      transform: `translateX(${horizontalPosition}px)`,
                   }}
                   onMouseEnter={() => setTitleHovered(true)}
                   onMouseLeave={() => setTitleHovered(false)}
                >
+                  <img
+                     src={`${URL_POSTER_PATH + title.backdrop_path}`}
+                     alt=''
+                     loading='lazy'
+                     className='backgroundImage'
+                  />
                   <p>{title.title}</p>
                </S.Title>
             ))}

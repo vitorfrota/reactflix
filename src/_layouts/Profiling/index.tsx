@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import { Header } from '@/components';
+import { AvatarContextProvider } from '@/contexts/AvatarContext';
 
 import * as S from './styles';
 
@@ -9,7 +10,9 @@ const Profiling = () => {
       <S.Container>
          <Header />
          <div className='content'>
-            <Outlet />
+            <AvatarContextProvider>
+               <Outlet />
+            </AvatarContextProvider>
          </div>
       </S.Container>
    );

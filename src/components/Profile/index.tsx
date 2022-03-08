@@ -65,15 +65,20 @@ const Profile = () => {
                         <li
                            key={profile.id}
                            onClick={() => handleSelectProfile(profile.id)}
+                           onKeyPress={() => handleSelectProfile(profile.id)}
+                           tabIndex={0}
                         >
                            <img
                               src={profile.avatar || defaultAvatarImg}
+                              loading='lazy'
                               alt={`avatar do perfil ${profile.name}`}
                            />
                            <p>{profile.name}</p>
                         </li>
                      ))}
-                  <Link to='/browse'>Gerenciar perfis</Link>
+                  <Link to='/browse' onKeyPress={() => navigate('/browse')}>
+                     Gerenciar perfis
+                  </Link>
                </S.ProfilesList>
                <ul className='menuList'>
                   <li onClick={() => navigate('/account')} tabIndex={0}>

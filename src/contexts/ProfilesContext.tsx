@@ -5,25 +5,16 @@ import {
    useEffect,
    useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ref, push, onValue, update, remove } from 'firebase/database';
-import {
-   getStorage,
-   ref as storageRef,
-   listAll,
-   getDownloadURL,
-} from 'firebase/storage';
 
 import { useAuth } from '@/hooks/auth';
 import { db } from '@/services/firebase';
-import { useNavigate } from 'react-router-dom';
+
+const LOCAL_STORAGE_KEY = '@reactflix:currentProfile';
 
 type ProfileContextProviderProps = {
    children: ReactNode;
-};
-
-type Avatar = {
-   id: number;
-   path: string;
 };
 
 type Profile = {
@@ -38,7 +29,6 @@ type ProfileFormData = {
 };
 
 type ProfileContextType = {
-   avatars: Avatar[];
    createProfile: (formData: ProfileFormData) => Promise<void>;
    currentProfile: Profile;
    deleteProfile: (profileId: string) => Promise<void>;
@@ -59,33 +49,23 @@ export function ProfileContextProvider({
    const navigate = useNavigate();
    const { user } = useAuth();
 
-   const [avatars, setAvatars] = useState<Avatar[]>([]);
    const [loading, setLoading] = useState(true);
-
    const [profiles, setProfiles] = useState<Profile[]>([]);
-   const [currentProfile, setCurrentProfile] = useState<Profile>({} as Profile);
+   const [currentProfile, setCurrentProfile] = useState<Profile>(() => {
+      const storedProfileId = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      const profileEncountered = profiles.find(
+         (profile) => profile.id === storedProfileId
+      );
+
+      if (profileEncountered) return profileEncountered;
+
+      return {} as Profile;
+   });
 
    useEffect(() => {
-      const storage = getStorage();
-
-      const avatarsListRef = storageRef(storage, 'avatars/');
-
-      listAll(avatarsListRef)
-         .then((res) => {
-            res.items.forEach((itemRef, index) => {
-               getDownloadURL(storageRef(storage, itemRef.fullPath)).then(
-                  (url) => {
-                     setAvatars((state) => {
-                        return [...state, { id: index, path: url }];
-                     });
-                  }
-               );
-            });
-         })
-         .catch((error) => {
-            console.log('Erro em nosso sistema :(');
-         });
-   }, []);
+      if (!currentProfile.id) navigate('/browse');
+   }, [currentProfile]);
 
    useEffect(() => {
       if (user) {
@@ -109,25 +89,12 @@ export function ProfileContextProvider({
             { onlyOnce: true }
          );
       }
+
+      return () => {
+         setCurrentProfile({} as Profile);
+         setProfiles([]);
+      };
    }, [user]);
-
-   useEffect(() => {
-      const currentProfileId = localStorage.getItem(
-         '@reactflix:currentProfile'
-      );
-
-      if (!currentProfileId) navigate('/browse');
-
-      if (profiles.length > 0) {
-         const profileEncountered = profiles.find(
-            (profile) => profile.id === currentProfileId
-         );
-
-         if (profileEncountered) {
-            setCurrentProfile(profileEncountered);
-         }
-      }
-   }, [profiles]);
 
    const createProfile = useCallback(
       async (formData: ProfileFormData) => {
@@ -136,14 +103,14 @@ export function ProfileContextProvider({
          try {
             const { name, avatar } = formData;
 
-            const key = push(ref(db, 'user-profiles/' + user?.id), {
+            const newProfileId = push(ref(db, 'user-profiles/' + user?.id), {
                name,
                avatar,
             }).key;
 
-            if (key) {
+            if (newProfileId) {
                const newProfile = {
-                  id: key,
+                  id: newProfileId,
                   name,
                   avatar,
                };
@@ -163,13 +130,9 @@ export function ProfileContextProvider({
          (profile) => profile.id === profileId
       );
 
-      if (!!profileEncountered) {
+      if (profileEncountered) {
          setCurrentProfile(profileEncountered);
-
-         localStorage.setItem(
-            '@reactflix:currentProfile',
-            profileEncountered.id
-         );
+         localStorage.setItem(LOCAL_STORAGE_KEY, profileEncountered.id);
       }
    };
 
@@ -207,17 +170,19 @@ export function ProfileContextProvider({
 
    const deleteProfile = useCallback(
       async (profileId: string) => {
-         remove(ref(db, `/user-profiles/${user?.id}/${profileId}`))
+         setLoading(true);
+
+         await remove(ref(db, `/user-profiles/${user?.id}/${profileId}`))
             .then(() => {
                const filteredProfiles = profiles.filter(
                   (profile) => profile.id !== profileId
                );
-
                setProfiles(filteredProfiles);
             })
             .catch((_) => {
                new Error('Não foi possível deletar o perfil :(');
-            });
+            })
+            .finally(() => setLoading(false));
       },
       [profiles]
    );
@@ -225,7 +190,6 @@ export function ProfileContextProvider({
    return (
       <ProfileContext.Provider
          value={{
-            avatars,
             createProfile,
             currentProfile,
             deleteProfile,

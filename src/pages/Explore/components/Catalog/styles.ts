@@ -25,7 +25,7 @@ export const Container = styled('section', {
       fontSize: '1.5rem',
    },
 
-   '& button': {
+   '& > button': {
       zIndex: 2,
       position: 'absolute',
       top: '55%',
@@ -59,7 +59,7 @@ export const CatalogContainer = styled('ul', {
       top: 0,
       left: '-1rem',
       height: '$$height',
-      width: '40px',
+      width: '30px',
       background: linearGradientDark('right'),
    },
 
@@ -91,15 +91,16 @@ export const Title = styled('li', {
    position: 'relative',
    width: '$$width',
    height: '$$height',
-   padding: '$base',
    display: 'inline-block',
    backgroundSize: 'cover',
-   border: '2px solid $background',
    borderRadius: '2px',
-   boxShadow: 'inset 0 -40px 40px rgba(7,9,11, 0.75)',
    cursor: 'pointer',
 
    transition: 'all $$duration ease-in-out',
+
+   '& .backgroundImage': {
+      width: '$full',
+   },
 
    '& > p': {
       position: 'absolute',
@@ -108,13 +109,16 @@ export const Title = styled('li', {
       whiteSpace: 'normal',
       wordBreak: 'break-word',
       fontWeight: '$bold',
-   },
-
-   '& + li': {
-      marginLeft: '$s',
+      textShadow: '0 2px 2px rgb(0 0 0 / 75%)',
    },
 
    '&:hover': {
-      borderColor: '#fff',
+      '& .backgroundImage': {
+         opacity: '0.90',
+      },
+   },
+
+   '& + li': {
+      marginLeft: '$base',
    },
 });
