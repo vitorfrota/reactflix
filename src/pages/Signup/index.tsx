@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FiChevronRight } from 'react-icons/fi';
 
-import { Button, Accordion, Header, Input } from '@/components';
+import { Button, Header, Input } from '@/components';
+import { Faq } from '@/containers';
 import { ISectionSignUp, sections } from '@/constants/sectionsLanding';
-import faqQuestions from '@/constants/faqQuestions';
 import { RegistrationContext } from '@/contexts/RegistrationContext';
 
 import Section from './components/Section';
@@ -46,15 +46,9 @@ const Signup = () => {
          <Section>
             <div className='wrapper' style={{ flexDirection: 'column' }}>
                <h1>Perguntas frequentes</h1>
-               <ul className='faqListContainer'>
-                  {faqQuestions.map((question, index) => (
-                     <Accordion
-                        key={index}
-                        question={question.question}
-                        answer={question.answer}
-                     />
-                  ))}
-               </ul>
+               <div style={{ margin: '2rem 0', width: '100%' }}>
+                  <Faq />
+               </div>
                <FormSignup />
             </div>
          </Section>

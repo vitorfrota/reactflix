@@ -55,7 +55,7 @@ const Profile = () => {
                src={currentProfile?.avatar || defaultAvatarImg}
                alt={`avatar profile ${currentProfile.name}`}
             />
-            <p>{currentProfile.name}</p>
+            <p>{currentProfile?.name}</p>
          </S.BadgeContainer>
          {showMenu && (
             <S.MenuContainer ref={menuRef}>

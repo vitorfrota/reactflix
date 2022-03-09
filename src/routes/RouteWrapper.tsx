@@ -22,7 +22,7 @@ const RouteWrapper = ({
    }, [title]);
 
    if (isLogged && !isPrivate) {
-      return <Navigate to='/browse' state={{ from: location }} replace />;
+      return <Navigate to='/explore' state={{ from: location }} replace />;
    }
 
    if (!isLogged && isPrivate) {

@@ -51,21 +51,7 @@ export function ProfileContextProvider({
 
    const [loading, setLoading] = useState(true);
    const [profiles, setProfiles] = useState<Profile[]>([]);
-   const [currentProfile, setCurrentProfile] = useState<Profile>(() => {
-      const storedProfileId = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-      const profileEncountered = profiles.find(
-         (profile) => profile.id === storedProfileId
-      );
-
-      if (profileEncountered) return profileEncountered;
-
-      return {} as Profile;
-   });
-
-   useEffect(() => {
-      if (!currentProfile.id) navigate('/browse');
-   }, [currentProfile]);
+   const [currentProfile, setCurrentProfile] = useState<Profile>({} as Profile);
 
    useEffect(() => {
       if (user) {
@@ -83,6 +69,14 @@ export function ProfileContextProvider({
                      }
                   );
                   setProfiles(parsedProfiles);
+
+                  const storedProfileId =
+                     localStorage.getItem(LOCAL_STORAGE_KEY);
+                  const profileEncountered = parsedProfiles.find(
+                     (profile) => profile.id === storedProfileId
+                  );
+
+                  if (profileEncountered) setCurrentProfile(profileEncountered);
                }
                setLoading(false);
             },
